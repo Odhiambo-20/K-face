@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 import '../models/enrollment_draft.dart';
 import 'how_to_setup_kface_screen.dart';
-import 'login_screen.dart';
+import 'sign_up_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
-  static const route = '/signup';
+  static const route = '/';
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _usernameFocus = FocusNode();
   String? _error;
@@ -51,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         builder: (_) => HowToSetupKfaceScreen(
           draft: EnrollmentDraft(
             username: username,
-            flow: AuthFlow.signUp,
+            flow: AuthFlow.logIn,
           ),
         ),
       ),
@@ -84,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 10),
               const Text(
-                'Enter  username to signup',
+                'Enter your username to log in',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _hintGrey,
@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 40),
               const Text(
-                'Sign up',
+                'Log in',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -107,7 +107,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 focusNode: _usernameFocus,
                 onChanged: (_) => setState(() {}),
                 autocorrect: false,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) {
+                  if (canNext) _goNext();
+                },
                 keyboardType: TextInputType.text,
                 style: const TextStyle(color: Colors.white, fontSize: 17),
                 cursorColor: _linkBlue,
@@ -166,7 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Center(
                 child: Text.rich(
                   TextSpan(
-                    text: 'Log in',
+                    text: 'Sign up',
                     style: const TextStyle(
                       color: _linkBlue,
                       fontSize: 16,
@@ -175,7 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => Navigator.of(context).push(
                             MaterialPageRoute<void>(
-                              builder: (_) => const LoginScreen(),
+                              builder: (_) => const SignUpScreen(),
                             ),
                           ),
                   ),

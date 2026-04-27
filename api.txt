@@ -26,20 +26,12 @@ class EnrollmentUploadResult {
 }
 
 const _kEndpointPrefKey = 'enrollment_api_url';
-// ngrok public tunnel URL — update this when your ngrok session restarts
-
-const _kDevFallbackUrl =
-    'https://kface-backend-53376040704.us-central1.run.app/enroll';
-
+// For physical device on same WiFi network
+const _kDevFallbackUrl = 'http://192.168.100.157:8000/enroll';
 const _kCompileTimeEndpoint = String.fromEnvironment(
   'ENROLLMENT_API_URL',
   defaultValue: _kDevFallbackUrl,
 );
-
-// Required header to bypass ngrok's browser warning page on free tier
-//const _kNgrokHeaders = {
-  //'ngrok-skip-browser-warning': 'true',
-//};
 
 class BiometricEnrollmentApi {
   BiometricEnrollmentApi({http.Client? client})
@@ -75,93 +67,6 @@ class BiometricEnrollmentApi {
     debugPrint('[EnrollmentApi] Loaded endpoint: $_cachedEndpoint');
   }
 
-  Future<String> _getBaseUrl() async {
-    final enrollUrl = await getEndpoint();
-    _cachedEndpoint = enrollUrl;
-    return enrollUrl.endsWith('/enroll')
-        ? enrollUrl.substring(0, enrollUrl.length - '/enroll'.length)
-        : enrollUrl;
-  }
-
-
-
-
-
-
-
-
-
-  Future<bool> checkUsernameAvailable(String username) async {
-    final baseUrl = await _getBaseUrl();
-    final uri = Uri.parse('$baseUrl/check-username')
-        .replace(queryParameters: {'username': username});
-
-    debugPrint('[EnrollmentApi] Checking username availability: $uri');
-
-    try {
-      final response = await _client
-          .get(uri)
-          .timeout(const Duration(seconds: 10));
-
-      debugPrint('[EnrollmentApi] Username check status: ${response.statusCode}');
-      debugPrint('[EnrollmentApi] Username check body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final body = jsonDecode(response.body) as Map<String, dynamic>;
-        return body['available'] == true;
-      }
-      throw Exception('Username check failed: HTTP ${response.statusCode}');
-    } catch (e) {
-      debugPrint('[EnrollmentApi] Username check error: $e');
-      rethrow;
-    }
-  }
-
-  Future<bool> checkUsernameExists(String username) async {
-    final baseUrl = await _getBaseUrl();
-    final uri = Uri.parse('$baseUrl/check-login-username')
-        .replace(queryParameters: {'username': username});
-
-    debugPrint('[EnrollmentApi] Checking login username: $uri');
-
-    try {
-      final response = await _client
-          .get(uri)
-          .timeout(const Duration(seconds: 10));
-
-      debugPrint('[EnrollmentApi] Login username status: ${response.statusCode}');
-      debugPrint('[EnrollmentApi] Login username body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final body = jsonDecode(response.body) as Map<String, dynamic>;
-        return body['exists'] == true;
-      }
-      throw Exception('Login username check failed: HTTP ${response.statusCode}');
-    } catch (e) {
-      debugPrint('[EnrollmentApi] Login username check error: $e');
-      rethrow;
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   Future<EnrollmentUploadResult> uploadEnrollment({
     required EnrollmentDraft draft,
     required File videoFile,
@@ -169,44 +74,6 @@ class BiometricEnrollmentApi {
     double frameHeight = 0,
   }) async {
     final url = await getEndpoint();
-    return _uploadVideoRequest(
-      url: url,
-      draft: draft,
-      videoFile: videoFile,
-      frameWidth: frameWidth,
-      frameHeight: frameHeight,
-      successMessage: 'Enrollment successful!',
-      duplicateMessage: 'You already have an account. Please log in.',
-    );
-  }
-
-  Future<EnrollmentUploadResult> uploadLogin({
-    required EnrollmentDraft draft,
-    required File videoFile,
-    double frameWidth = 0,
-    double frameHeight = 0,
-  }) async {
-    final baseUrl = await _getBaseUrl();
-    return _uploadVideoRequest(
-      url: '$baseUrl/login',
-      draft: draft,
-      videoFile: videoFile,
-      frameWidth: frameWidth,
-      frameHeight: frameHeight,
-      successMessage: 'Login successful!',
-      duplicateMessage: 'This account already exists. Please sign up with a different username.',
-    );
-  }
-
-  Future<EnrollmentUploadResult> _uploadVideoRequest({
-    required String url,
-    required EnrollmentDraft draft,
-    required File videoFile,
-    required double frameWidth,
-    required double frameHeight,
-    required String successMessage,
-    required String duplicateMessage,
-  }) async {
     _cachedEndpoint = url;
 
     debugPrint('[EnrollmentApi]');
@@ -215,7 +82,7 @@ class BiometricEnrollmentApi {
     debugPrint('[EnrollmentApi] Username: ${draft.username}');
     debugPrint('[EnrollmentApi] Frame size: ${frameWidth.toInt()} x ${frameHeight.toInt()}');
     debugPrint('[EnrollmentApi] Video path: ${videoFile.path}');
-
+    
     if (!await videoFile.exists()) {
       debugPrint('[EnrollmentApi] ERROR: Video file does not exist!');
       return const EnrollmentUploadResult(
@@ -241,23 +108,11 @@ class BiometricEnrollmentApi {
       );
     }
 
-    // Determine a safe filename with a valid video extension.
-    // The OS-assigned temp path often has no extension or ".temp",
-    // which causes OpenCV on the server to fail. We force .mp4 or .mov.
-    const _allowedVideoExts = {'.mp4', '.mov'};
-    final rawName = videoFile.uri.pathSegments.isNotEmpty
+    final filename = videoFile.uri.pathSegments.isNotEmpty
         ? videoFile.uri.pathSegments.last
-        : '';
-    final rawExt = rawName.contains('.')
-        ? rawName.substring(rawName.lastIndexOf('.')).toLowerCase()
-        : '';
-    final safeExt = _allowedVideoExts.contains(rawExt) ? rawExt : '.mp4';
-    final filename = 'enrollment$safeExt';
-
-    debugPrint('[EnrollmentApi] Upload filename: $filename (raw path was: $rawName)');
+        : 'enrollment.mp4';
 
     final request = http.MultipartRequest('POST', Uri.parse(url))
-      //..headers.addAll(_kNgrokHeaders)   // ← bypass ngrok browser warning
       ..fields['username'] = draft.username
       ..fields['frame_width'] = frameWidth.toInt().toString()
       ..fields['frame_height'] = frameHeight.toInt().toString();
@@ -275,12 +130,12 @@ class BiometricEnrollmentApi {
 
     try {
       final streamed = await request.send().timeout(
-        const Duration(seconds: 300),
+        const Duration(seconds: 60),
         onTimeout: () {
           throw Exception('Connection timeout after 60 seconds');
         },
       );
-
+      
       final response = await http.Response.fromStream(streamed);
       stopwatch.stop();
 
@@ -289,10 +144,8 @@ class BiometricEnrollmentApi {
       debugPrint('[EnrollmentApi] Response body: ${response.body}');
 
       final ok = response.statusCode >= 200 && response.statusCode < 300;
-      String message = ok ? successMessage : 'Upload failed (HTTP ${response.statusCode})';
+      String message = ok ? 'Enrollment successful!' : 'Upload failed (HTTP ${response.statusCode})';
       String hashkey = '';
-      // ← ADD THIS:
-      debugPrint('[EnrollmentApi] Full response body: ${response.body}');
 
       if (response.body.isNotEmpty) {
         try {
@@ -306,16 +159,11 @@ class BiometricEnrollmentApi {
           if (serverMessage.isNotEmpty) {
             message = serverMessage;
           }
-         if (!ok && response.statusCode == 409) {
-            message = duplicateMessage;
-          } else if (!ok) {
-            // FastAPI returns errors as {"detail": "..."}
-            final detail = decoded['detail']?.toString() ?? '';
-            if (detail.isNotEmpty) message = detail;
+          if (!ok && response.statusCode == 409) {
+            message = 'You already have an account. Please log in.';
           }
         } catch (e) {
           debugPrint('[EnrollmentApi] JSON parse error: $e');
-          debugPrint('[EnrollmentApi] Raw body that failed: "${response.body}"');
         }
       }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'sign_up_screen.dart';
+import 'login_screen.dart';
 
 /// Shown after enrollment: user sees [hashkey] (copyable) and [@username].
 class EnrollmentKeyResultScreen extends StatelessWidget {
@@ -9,10 +9,12 @@ class EnrollmentKeyResultScreen extends StatelessWidget {
     super.key,
     required this.username,
     required this.hashkey,
+    this.isLogin = false,
   });
 
   final String username;
   final String hashkey;
+  final bool isLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,16 @@ class EnrollmentKeyResultScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 32),
+              Text(
+                isLogin ? 'Login successful' : 'Sign-up successful',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Color(0xFFBFC6CF),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 12),
               Text(
                 '@$username',
                 textAlign: TextAlign.center,
@@ -100,7 +112,7 @@ class EnrollmentKeyResultScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute<void>(
-                        builder: (_) => const SignUpScreen(),
+                        builder: (_) => const LoginScreen(),
                       ),
                       (_) => false,
                     );

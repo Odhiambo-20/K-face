@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
 import 'package:camera/camera.dart';
@@ -9,14 +10,11 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../models/enrollment_draft.dart';
 import '../services/biometric_enrollment_api.dart';
-import '../services/firebase_data_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_background.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/tick_ring.dart';
 import 'enrollment_key_result_screen.dart';
-import 'package:video_thumbnail/video_thumbnail.dart' as vt;
-import 'dart:convert';
 
 class LookAtCameraScreen extends StatefulWidget {
   const LookAtCameraScreen({
@@ -35,6 +33,9 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
     with WidgetsBindingObserver {
   static const _analysisThrottle = Duration(milliseconds: 200);
 
+  // Fixed 3:4 aspect ratio
+  static const double _targetPreviewAspect = 3.0 / 4.0;
+
   // Face-detection thresholds (3:4 only)
   static const double _minNormW = 0.15;
   static const double _maxNormW = 0.40;
@@ -50,8 +51,6 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
   // Video recording constants
   static const int _countdownSeconds = 3;
   static const int _recordDurationSeconds = 5;
-  static const double _bottomPanelHeight = 250;
-  static const int _tickRingCount = 72;
 
   // Camera / detector state
   CameraController? _controller;
@@ -70,7 +69,6 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
   */
 
   final BiometricEnrollmentApi _api = BiometricEnrollmentApi();
-  final FirebaseDataService _firebase = FirebaseDataService();
 
   bool _isAnalyzing = false;
   bool _isStreaming = false;
@@ -82,11 +80,9 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
   double _lastFrameW = 0;
   double _lastFrameH = 0;
   double _uploadProgress = 0.0;
-  double _recordingRingProgress = 0.0;
   int _countdownValue = _countdownSeconds;
   Timer? _countdownTimer;
   Timer? _recordTimer;
-  Timer? _ringProgressTimer;
   String _status = 'Center your face inside the ring.';
   String? _cameraError;
   String? _uploadErrorDetail;
@@ -114,7 +110,6 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
     _controller?.dispose();
     _controller = null;
     _initializeFuture = null;
-    _ringProgressTimer?.cancel();
     super.dispose();
   }
 
@@ -141,14 +136,8 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
   // ─── Camera init ─────
 
   Future<void> _initializeCamera() async {
-    final previousController = _controller;
-    _controller = null;
-    _initializeFuture = null;
-    await previousController?.dispose();
-
     setState(() {
       _cameraError = null;
-      _uploadErrorDetail = null;
       _status = 'Center your face inside the ring.';
     });
 
@@ -163,33 +152,82 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
 
     try {
       final cameras = await availableCameras();
-      if (cameras.isEmpty) {
-        setState(() {
-          _cameraError = 'No camera was found on this device.';
-          _status = 'Unable to initialize the camera.';
-        });
-        return;
-      }
-
       final frontCameras = cameras
           .where((c) => c.lensDirection == CameraLensDirection.front)
           .toList();
 
-      final front = frontCameras.isNotEmpty ? frontCameras.first : cameras.first;
+      CameraDescription front;
 
-      final controller = await _buildFrontCameraController(front);
-      _controller = controller;
-      _initializeFuture = Future<void>.value();
+      if (frontCameras.isEmpty) {
+        front = cameras.first;
+      } else if (frontCameras.length == 1) {
+        front = frontCameras.first;
+      } else {
+        
+        front = frontCameras.first;
 
-      if (!mounted) {
-        await controller.dispose();
-        return;
+        double bestScore = 0;
+
+        for (final cam in frontCameras) {
+          final test = CameraController(cam, ResolutionPreset.medium, enableAudio: false);
+          await test.initialize();
+
+          final size = test.value.previewSize;
+          await test.dispose();
+
+          if (size != null) {
+            final area = size.width * size.height;
+
+            if (area > bestScore) {
+              bestScore = area;
+              front = cam;
+            }
+          }
+        }
       }
+
+      // Try presets to find one closest to 3:4
+      ResolutionPreset selectedPreset = ResolutionPreset.max;
+      final presetsToTry = [
+        ResolutionPreset.max,
+        ResolutionPreset.ultraHigh,
+        ResolutionPreset.veryHigh,
+        ResolutionPreset.high,
+        ResolutionPreset.medium,
+      ];
+
+      for (final preset in presetsToTry) {
+        final test = CameraController(front, preset, enableAudio: false);
+        await test.initialize();
+        final size = test.value.previewSize;
+        await test.dispose();
+        if (size != null && ((size.width / size.height) - 0.75).abs() < 0.05) {
+          selectedPreset = preset;
+          debugPrint('Found 3:4 preset: $preset (${size.width}x${size.height})');
+          break;
+        }
+      }
+
+      final controller = CameraController(
+        front,
+        selectedPreset,
+        enableAudio: false,
+        imageFormatGroup: Platform.isIOS
+            ? ImageFormatGroup.bgra8888
+            : ImageFormatGroup.yuv420,
+      );
+
+      _controller = controller;
+      _initializeFuture = controller.initialize();
       setState(() {});
 
-      await _safeLockPortrait(controller);
-      await _safeSetExposureLocked(controller);
-      await _safeSetMinZoom(controller);
+      await _initializeFuture;
+      await controller.lockCaptureOrientation(
+      DeviceOrientation.portraitUp,
+      );
+      //await controller.setZoomLevel(0.75);
+      final minZoom = await controller.getMinZoomLevel();
+      await controller.setZoomLevel(minZoom);
 
       if (controller.value.isInitialized) {
         final size = controller.value.previewSize;
@@ -204,7 +242,7 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
       setState(() {});
     } on CameraException catch (e) {
       setState(() {
-        _cameraError = _formatCameraError(e);
+        _cameraError = e.description ?? e.code;
         _status = 'Unable to initialize the camera.';
       });
     } catch (e) {
@@ -213,99 +251,6 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
         _status = 'Unable to initialize the camera.';
       });
     }
-  }
-
-  Future<CameraController> _buildFrontCameraController(
-    CameraDescription front,
-  ) async {
-    final presetsToTry = <ResolutionPreset>[
-      ResolutionPreset.medium,
-      ResolutionPreset.high,
-      ResolutionPreset.veryHigh,
-      ResolutionPreset.low,
-    ];
-
-    CameraException? lastCameraException;
-    Object? lastError;
-
-    for (final preset in presetsToTry) {
-      final controller = CameraController(
-        front,
-        preset,
-        enableAudio: false,
-        imageFormatGroup: Platform.isIOS
-            ? ImageFormatGroup.bgra8888
-            : ImageFormatGroup.yuv420,
-      );
-
-      try {
-        await controller.initialize();
-        return controller;
-      } on CameraException catch (e) {
-        lastCameraException = e;
-        await controller.dispose();
-      } catch (e) {
-        lastError = e;
-        await controller.dispose();
-      }
-    }
-
-    if (lastCameraException != null) {
-      throw lastCameraException!;
-    }
-    throw lastError ?? Exception('Unable to initialize the front camera.');
-  }
-
-  Future<void> _safeLockPortrait(CameraController controller) async {
-    try {
-      await controller.lockCaptureOrientation(DeviceOrientation.portraitUp);
-    } catch (e, st) {
-      debugPrint('[Camera] lockCaptureOrientation failed: $e\n$st');
-    }
-  }
-
-
-  Future<void> _safeSetExposureLocked(CameraController controller) async {
-    try {
-    
-      await controller.setExposureMode(ExposureMode.auto);
-
-    
-      await Future.delayed(const Duration(seconds: 1));
-
-      final maxExposure = await controller.getMaxExposureOffset();
-
-      final targetOffset = 0.5;
-
-      await controller.setExposureOffset(
-        targetOffset.clamp(0.0, maxExposure),
-      );
-
-      await Future.delayed(const Duration(milliseconds: 500));
-
-      controller.setExposureMode(ExposureMode.locked);
-
-    } catch (e, st) {
-      debugPrint('[Camera] setExposureMode failed: $e\n$st');
-    }
-  }
-
-
-  Future<void> _safeSetMinZoom(CameraController controller) async {
-    try {
-      final minZoom = await controller.getMinZoomLevel();
-      await controller.setZoomLevel(minZoom);
-    } catch (e, st) {
-      debugPrint('[Camera] setZoomLevel failed: $e\n$st');
-    }
-  }
-
-  String _formatCameraError(CameraException e) {
-    final description = e.description?.trim();
-    if (description != null && description.isNotEmpty) {
-      return description;
-    }
-    return e.code;
   }
 
   // ─── Face tracking ──────
@@ -352,71 +297,17 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
     });
   }
 
-
-
-
-
-
-
   // Add this method after _startFaceTracking()
-Future<void> _autoStartRecording() async {
-  // Wait a moment for camera to stabilize
-  await Future.delayed(const Duration(milliseconds: 1500));
-
-  if (!mounted || _isBusy || _isUploading || _didTriggerCapture) return;
-
-  final username = widget.draft.username;
-  final isLogin = widget.draft.isLogin;
-  setState(() {
-    _status = isLogin
-        ? 'Checking username…'
-        : 'Checking username availability…';
-  });
-
-  try {
-    if (isLogin) {
-      final exists = await _api.checkUsernameExists(username);
-      if (!exists) {
-        if (mounted) {
-          setState(() {
-            _status =
-                'The username "$username" was not found. Please sign up first.';
-            _uploadErrorDetail =
-                'Username "$username" does not exist in the backend.';
-          });
-        }
-        return;
-      }
-    } else {
-      final isAvailable = await _api.checkUsernameAvailable(username);
-      if (!isAvailable) {
-        if (mounted) {
-          setState(() {
-            _status =
-                'The username "$username" is already taken. Please go back and choose a different one.';
-            _uploadErrorDetail =
-                'Username "$username" is already registered in the system.';
-          });
-        }
-        return;
+    Future<void> _autoStartRecording() async {
+      // Wait a moment for camera to stabilize
+      await Future.delayed(const Duration(milliseconds: 800));
+      
+      if (mounted && !_isBusy && !_isUploading && !_didTriggerCapture) {
+        debugPrint('[Auto] Starting recording sequence');
+        _didTriggerCapture = true;
+        await _startVideoRecordingSequence();
       }
     }
-  } catch (e) {
-    debugPrint('[UsernameCheck] Failed: $e — proceeding anyway');
-  }
-
-  debugPrint('[Auto] Starting recording sequence');
-  _didTriggerCapture = true;
-  await _startVideoRecordingSequence();
-}
-
-
-
-
-
-
-
-
 
 
   /*
@@ -596,37 +487,6 @@ Future<void> _autoStartRecording() async {
     setState(() => _status = next);
   }
 
-  double get _ringActiveFraction {
-  if (_isUploading) return 1.0;
-  if (_isRecording) return _recordingRingProgress;
-  return _uploadProgress;   // stays at 1.0 after recording since you set it to 1.0
-  }
-
-  void _startRecordingRingProgress() {
-    _ringProgressTimer?.cancel();
-    final stepDuration = Duration(
-      milliseconds: ((_recordDurationSeconds * 1000) / _tickRingCount).round(),
-    );
-    var activeTicks = 0;
-
-    _ringProgressTimer = Timer.periodic(stepDuration, (timer) {
-      if (!mounted || !_isRecording) {
-        timer.cancel();
-        return;
-      }
-
-      activeTicks++;
-      final nextProgress = (activeTicks / _tickRingCount).clamp(0.0, 1.0);
-      setState(() {
-        _recordingRingProgress = nextProgress;
-      });
-
-      if (activeTicks >= _tickRingCount) {
-        timer.cancel();
-      }
-    });
-  }
-
   // ─── Video recording sequence (3s invisible countdown + 1s record with green ring) ───
 
   Future<void> _startVideoRecordingSequence() async {
@@ -671,332 +531,130 @@ Future<void> _autoStartRecording() async {
     }
   }
 
- Future<void> _startVideoRecording() async {
-  debugPrint('[Record] Attempting to start recording...');
-  final controller = _controller;
-  if (controller == null) {
-    debugPrint('[Record] Controller is null, aborting');
-    _didTriggerCapture = false;
-    _isBusy = false;
-    return;
-  }
+  Future<void> _startVideoRecording() async {
+    debugPrint('[Record] Attempting to start recording...');  // ADD
+    final controller = _controller;
+    if (controller == null) {
+      debugPrint('[Record] Controller is null, aborting');  // ADD
+      _didTriggerCapture = false;
+      _isBusy = false;
+      return;
+    }
+    await controller.pausePreview();
 
-  await controller.lockCaptureOrientation(DeviceOrientation.portraitUp);
+    await controller.lockCaptureOrientation(
+    DeviceOrientation.portraitUp,
+    );
 
-  //Log the actual preview size at the moment recording begins
-  debugPrint(
-      'Recording size: ${controller.value.previewSize}'
-  );
-  
-  await _safeSetExposureLocked(controller);
-
-  await controller.startVideoRecording();
-
-  _setStatus('Recording...');
-  if (mounted) {
-    setState(() {
-      _isRecording = true;
-      _uploadProgress = 0.0;
-      _recordingRingProgress = 0.0;
-    });
-  }
-
-  try {
-    await controller.startVideoRecording();
-    debugPrint('[Record] Recording started successfully');
-    _startRecordingRingProgress();
-
-    _recordTimer = Timer(const Duration(seconds: _recordDurationSeconds), () async {
-      debugPrint('[Record] Timer fired, stopping...');
-      if (!mounted) return;
-
-      try {
-        final XFile videoFile = await controller.stopVideoRecording();
-        _ringProgressTimer?.cancel();
-        await controller.pausePreview();
-
-
-        await Future.delayed(
-          const Duration(milliseconds: 100),
-        );
-
-        await controller.resumePreview();
-
-       
-        final file = File(videoFile.path);
-
-        if (!await file.exists()) {
-          debugPrint("Video file missing");
-          return;
-        }
-
-        final size = await file.length();
-        debugPrint("Video size: $size");
-
-        if (size == 0) {
-          debugPrint("Video file is empty");
-          _isBusy = false;
-          _didTriggerCapture = false;
-          _setStatus('Center your face inside the ring.');
-          await _restartTrackingIfNeeded();
-          await _autoStartRecording();
-          return;
-        }
-
-        if (mounted) {
-          setState(() {
-            _uploadProgress = 1.0;        // ← move this FIRST
-            _isRecording = false;
-            _recordingRingProgress = 1.0;
-          });
-        }
-
-
-        // Extract a thumbnail frame and upload to Firebase Storage
-      
-          String? firebaseFrameUrl;
-            if (_firebase.isReady) {
-              final thumbBytes = await vt.VideoThumbnail.thumbnailData(
-                video: videoFile.path,
-                imageFormat: vt.ImageFormat.JPEG,
-                quality: 85,
-              );
-              
-
-           if (thumbBytes != null) {
-            final folder = widget.draft.isLogin ? 'login_frames' : 'signup_frames';
-            firebaseFrameUrl = await _firebase.tryUploadFrameImage(
-              username: widget.draft.username,
-              imageBytes: thumbBytes,
-              folder: folder,
-              filename: 'thumb_${DateTime.now().millisecondsSinceEpoch}.jpg',
-            );
-          }
-        }
-
-        await _uploadVideo(videoFile, frameUrl: firebaseFrameUrl);
-      
-      } catch (e) {
-        if (mounted) {
-          _ringProgressTimer?.cancel();
-          setState(() {
-            _isRecording = false;
-            _recordingRingProgress = 0.0;
-          });
-          _setStatus('Recording failed. Try again.');
-          _didTriggerCapture = false;
-          _isBusy = false;
-          await _restartTrackingIfNeeded();
-        }
-      }
-    });
-  } catch (e) {
-    _ringProgressTimer?.cancel();
-    setState(() {
-      _isRecording = false;
-      _recordingRingProgress = 0.0;
-    });
-    _setStatus('Recording failed. Try again.');
-    _didTriggerCapture = false;
-    _isBusy = false;
-    await _restartTrackingIfNeeded();
-  }
-}
-
-
-Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
-    _isUploading = true;
-    _setStatus(widget.draft.isLogin ? 'Verifying login...' : 'Processing video...');
-
-    final localVideoFile = File(videoFile.path);
-    String? firebaseVideoUrl;
-
-    if (_firebase.isReady) {
-      firebaseVideoUrl = widget.draft.isLogin
-          ? await _firebase.tryUploadVideoFile(
-              username: widget.draft.username,
-              file: localVideoFile,
-              folder: 'login_videos',
-            )
-          : await _firebase.tryUploadVideoFile(
-              username: widget.draft.username,
-              file: localVideoFile,
-              folder: 'enrollment_videos',
-            );
+    _setStatus('Recording...');
+    if (mounted) {
+      setState(() {
+        _isRecording = true;
+        _uploadProgress = 0.0;
+      });
     }
 
-    // ── 1. API call in its own try/catch ─────────────────────────────────────
-    EnrollmentUploadResult? result;
     try {
-      result = widget.draft.isLogin
-          ? await _api.uploadLogin(
-              draft: widget.draft,
-              videoFile: localVideoFile,
-              frameWidth: _lastFrameW,
-              frameHeight: _lastFrameH,
-            )
-          : await _api.uploadEnrollment(
-              draft: widget.draft,
-              videoFile: localVideoFile,
-              frameWidth: _lastFrameW,
-              frameHeight: _lastFrameH,
-            );
+      await controller.startVideoRecording();
+      debugPrint('[Record] Recording started successfully');  // ADD
+      
+      // Record for exactly 1 second
+      _recordTimer = Timer(const Duration(seconds: _recordDurationSeconds), () async {
+        debugPrint('[Record] Timer fired, stopping...');  // ADD
+        if (!mounted) return;
+        
+        try {
+          final XFile videoFile = await controller.stopVideoRecording();
+
+          await Future.delayed(
+            const Duration(milliseconds: 300),
+          );
+          await controller. resumePreview();
+          if (mounted) {
+            setState(() {
+              _isRecording = false;
+              _uploadProgress = 0.5; // Halfway for visual feedback
+            });
+          }
+          await _uploadVideo(videoFile);
+        } catch (e) {
+          if (mounted) {
+            setState(() => _isRecording = false);
+            _setStatus('Recording failed. Try again.');
+            _didTriggerCapture = false;
+            _isBusy = false;
+            await _restartTrackingIfNeeded();
+          }
+        }
+      });
+    } catch (e) {
+      setState(() => _isRecording = false);
+      _setStatus('Recording failed. Try again.');
+      _didTriggerCapture = false;
+      _isBusy = false;
+      await _restartTrackingIfNeeded();
+    }
+  }
+
+  Future<void> _uploadVideo(XFile videoFile) async {
+    _isUploading = true;
+    _setStatus('Processing video...');
+    if (mounted) setState(() => _uploadProgress = 0.6);
+
+    try {
+      final result = await _api.uploadEnrollment(
+        draft: widget.draft,
+        videoFile: File(videoFile.path),
+        frameWidth: _lastFrameW,
+        frameHeight: _lastFrameH,
+      );
+
+      // Clean up the temp video
+      try { await File(videoFile.path).delete(); } catch (_) {}
+
+      if (!mounted) return;
+
+      _isUploading = false;
+      _isBusy = false;
+
+      if (result.ok) {
+        setState(() => _uploadProgress = 1.0);
+        _setStatus(result.message);
+        await Navigator.of(context).pushAndRemoveUntil<void>(
+          MaterialPageRoute<void>(
+            builder: (_) => EnrollmentKeyResultScreen(
+              username: widget.draft.username,
+              hashkey: result.hashkey,
+            ),
+          ),
+          (route) => route.isFirst,
+        );
+        return;
+      }
+
+      // Upload failed
+      setState(() {
+        _uploadProgress = 0.0;
+        if (result.statusCode != 409) {
+          _uploadErrorDetail = result.message;
+        }
+      });
+      _setStatus(result.message);
+      _didTriggerCapture = false;
+      await _restartTrackingIfNeeded();
     } catch (e) {
       _didTriggerCapture = false;
       _isBusy = false;
       _isUploading = false;
       if (!mounted) return;
       final url = _api.endpointSync.isEmpty ? '(no URL)' : _api.endpointSync;
-      _saveFailureToFirebase(
-        firebaseVideoUrl: firebaseVideoUrl,
-        url: url,
-        errorMessage: e.toString(),
-      );
       setState(() {
-        _uploadErrorDetail =
-            '${widget.draft.isLogin ? 'Login' : 'Enrollment'} failed.\nPOST $url\n\n$e';
+        _uploadErrorDetail = 'Enrollment failed.\nPOST $url\n\n$e';
         _uploadProgress = 0.0;
       });
-      _setStatus(widget.draft.isLogin
-          ? 'Could not complete login. Try again.'
-          : 'Could not complete enrollment. Try again.');
+      _setStatus('Could not complete enrollment. Try again.');
       await _restartTrackingIfNeeded();
-      return;
     }
-
-    // Parse structured helper data from backend response
-    Map<String, dynamic> extraMeta = {};
-    if (result.rawBody != null) {
-      try {
-        extraMeta = jsonDecode(result.rawBody!) as Map<String, dynamic>;
-      } catch (_) {}
-    }
-
-    // ── 2. Firebase save — isolated, never allowed to throw upward ────────────
-    if (_firebase.isReady) {
-      try {
-        if (widget.draft.isLogin) {
-          await _firebase.saveLoginRecord(
-            username: widget.draft.username,
-            success: result.ok,
-            hashkey: result.hashkey,
-            message: result.message,
-            frameWidth: _lastFrameW,
-            frameHeight: _lastFrameH,
-            videoUrl: firebaseVideoUrl,
-            frameUrl: frameUrl,  
-            helperData: extraMeta,        // ← add this
-            backendRawBody: result.rawBody,
-            backendStatusCode: result.statusCode,
-            backendRequestUrl: result.requestUrl,
-          );
-        } else {
-          await _firebase.saveSignUpRecord(
-            username: widget.draft.username,
-            success: result.ok,
-            hashkey: result.hashkey,
-            message: result.message,
-            frameWidth: _lastFrameW,
-            frameHeight: _lastFrameH,
-            videoUrl: firebaseVideoUrl,
-            frameUrl: frameUrl,
-            helperData: extraMeta,        // ← add this
-            backendRawBody: result.rawBody,
-            backendStatusCode: result.statusCode,
-            backendRequestUrl: result.requestUrl,
-          );
-        }
-      } catch (firebaseError) {
-        debugPrint('[Firebase] Save failed (non-fatal): $firebaseError');
-      }
-    }
-
-    // ── 3. Navigate or show error ─────────────────────────────────────────────
-    if (!mounted) return;
-    _isUploading = false;
-    _isBusy = false;
-
-    if (result.ok) {
-      if (result.hashkey.isEmpty) {
-        setState(() {
-          _uploadErrorDetail =
-              'Succeeded but no key was returned.\nRaw: ${result!.rawBody}';
-          _uploadProgress = 0.0;
-        });
-        _setStatus('Error: missing key.');
-        _didTriggerCapture = false;
-        await _restartTrackingIfNeeded();
-        return;
-      }
-
-      setState(() {
-        _uploadProgress = 1.0;
-        _uploadErrorDetail = null;
-      });
-      _setStatus(result.message);
-      if (!mounted) return;
-      await Navigator.of(context).pushAndRemoveUntil<void>(
-        MaterialPageRoute<void>(
-          builder: (_) => EnrollmentKeyResultScreen(
-            username: widget.draft.username,
-            hashkey: result!.hashkey,
-            isLogin: widget.draft.isLogin,
-          ),
-        ),
-        (_) => false,
-      );
-      return;
-    }
-
-    setState(() {
-      _uploadErrorDetail = result!.message;
-      _uploadProgress = 0.0;
-    });
-    _setStatus(result.message);
-    _didTriggerCapture = false;
-    await _restartTrackingIfNeeded();
-  }
-
-  // Saves a failure record to Firebase without risking a throw on the happy path.
-  void _saveFailureToFirebase({
-    required String? firebaseVideoUrl,
-    required String url,
-    required String errorMessage,
-  }) {
-    if (!_firebase.isReady) return;
-    final isLogin = widget.draft.isLogin;
-    final username = widget.draft.username;
-    final frameW = _lastFrameW;
-    final frameH = _lastFrameH;
-    Future.microtask(() async {
-      try {
-        if (isLogin) {
-          await _firebase.saveLoginRecord(
-            username: username,
-            success: false,
-            hashkey: '',
-            message: errorMessage,
-            frameWidth: frameW,
-            frameHeight: frameH,
-            videoUrl: firebaseVideoUrl,
-            backendRequestUrl: url,
-          );
-        } else {
-          await _firebase.saveSignUpRecord(
-            username: username,
-            success: false,
-            hashkey: '',
-            message: errorMessage,
-            frameWidth: frameW,
-            frameHeight: frameH,
-            videoUrl: firebaseVideoUrl,
-            backendRequestUrl: url,
-          );
-        }
-      } catch (e) {
-        debugPrint('[Firebase] Failure record save failed: $e');
-      }
-    });
   }
 
   Future<void> _restartTrackingIfNeeded() async {
@@ -1010,41 +668,35 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
     }
   }
 
+  // ─── Build ──────
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final previewHeight = size.height - _bottomPanelHeight;
 
+    //Circle size
     final double ringSize = (size.width * 0.75).clamp(240.0, 340.0);
-    final double ringCentreFromTop = previewHeight * 0.50;
+    final double ringCentreFromTop = size.height * 0.38;
     final double ringLeft         = (size.width - ringSize) / 2;
     final double ringTop          = ringCentreFromTop - ringSize / 2;
     const double tickRingMargin   = 20;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      bottomSheet: null,
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          const SizedBox.expand(),
-
-          Positioned(
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: _bottomPanelHeight,
-            child: _FullScreenCamera(
-              controller: _controller,
-              initializeFuture: _initializeFuture,
-              error: _cameraError,
-              isRecording: _isRecording,
-              onRetry: _initializeCamera,
-            ),
+          // 1. Full-screen camera feed
+          _FullScreenCamera(
+            controller: _controller,
+            initializeFuture: _initializeFuture,
+            error: _cameraError,
+            onRetry: _initializeCamera,
           ),
 
+          // 2. Close button
           SafeArea(
             child: Align(
               alignment: Alignment.topLeft,
@@ -1066,29 +718,34 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
             ),
           ),
 
+          // 3. Main Tick Ring - shows recording progress with green ticks
+          //    - Shows normal ring during face detection
+          //    - Turns green progressively during recording and upload
           Positioned(
             left:   ringLeft - tickRingMargin,
             top:    ringTop  - tickRingMargin,
             width:  ringSize + (tickRingMargin * 2),
             height: ringSize + (tickRingMargin * 2),
             child: TickRing(
-              size:               ringSize + (tickRingMargin * 2),
-              tickCount:          _tickRingCount,
-              tickWidth:          4,
-              tickLength:         14,
-              gap:                0,
-              tickColor:          const Color(0xFFBFC6CF),
-              activeTickColor:    const Color(0xFF00E676),
-              activeTickFraction: _ringActiveFraction,
+              size:              ringSize + (tickRingMargin * 2),
+              tickCount:         72,
+              tickWidth:         4,
+              tickLength:        14,
+              gap:               0,
+              tickColor:         const Color(0xFFBFC6CF),
+              activeTickColor:   const Color(0xFF00E676),
+              // During recording: show full green ring
+              // During upload: show progress
+              // Otherwise: no active ticks
+              activeTickFraction: _isRecording ? 1.0 : _uploadProgress,
               child: const SizedBox.shrink(),
             ),
           ),
-
+          // 4. Bottom panel
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
               width: double.infinity,
-              height: _bottomPanelHeight,
               color: Colors.black,
               padding: const EdgeInsets.fromLTRB(24, 28, 24, 32),
               child: Column(
@@ -1116,24 +773,20 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
 
                   if (_uploadErrorDetail != null && !_isUploading) ...[
                     const SizedBox(height: 10),
-                    Flexible(
-                      child: SingleChildScrollView(
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF2A1518),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: const Color(0xFF5C2A32)),
-                          ),
-                          child: Text(
-                            _uploadErrorDetail!,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              height: 1.45,
-                              color: Color(0xFFE8D4D4),
-                            ),
-                          ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2A1518),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFF5C2A32)),
+                      ),
+                      child: Text(
+                        _uploadErrorDetail!,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          height: 1.45,
+                          color: Color(0xFFE8D4D4),
                         ),
                       ),
                     ),
@@ -1168,23 +821,21 @@ class _FullScreenCamera extends StatelessWidget {
     required this.controller,
     required this.initializeFuture,
     required this.error,
-    required this.isRecording,
     required this.onRetry,
   });
 
   final CameraController? controller;
   final Future<void>?     initializeFuture;
   final String?           error;
-  final bool              isRecording;
   final VoidCallback      onRetry;
-
-  static const double _targetPreviewAspect = 3.0 / 4.0;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+
     if (error != null) {
       return Container(
-        color: const Color(0xFF1D2430),
+        color: const Color(0xFF151B25),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -1222,7 +873,7 @@ class _FullScreenCamera extends StatelessWidget {
     final c    = controller;
     final init = initializeFuture;
     if (c == null || init == null) {
-      return const SizedBox.expand();
+      return Container(color: const Color(0xFF151B25));
     }
 
     return FutureBuilder<void>(
@@ -1230,34 +881,23 @@ class _FullScreenCamera extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done ||
             !c.value.isInitialized) {
-          return const Center(
-            child: SizedBox(
-              width: 34,
-              height: 34,
-              child: CircularProgressIndicator(strokeWidth: 3),
-            ),
-          );
+          return Container(color: const Color(0xFF151B25));
         }
 
-        final previewSize = c.value.previewSize;
-        final previewAspect = previewSize == null
-            ? _targetPreviewAspect
-            : previewSize.height / previewSize.width;
-
-        return SizedBox.expand(
-          child: Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.diagonal3Values(-1, 1, 1),
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: SizedBox(
-                width: 1000,
-                height: 1000 / previewAspect,
-                child: CameraPreview(c),
-              ),
-            ),
-          ),
-        );
+   return SizedBox.expand(
+    child: Align(
+      alignment: const Alignment(0, -0.50),
+      child: AspectRatio(
+        aspectRatio: 3.0 / 4.0,
+        child: Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.diagonal3Values(-1, 1, 1),
+          child: CameraPreview(c),
+        ),
+      ),
+    ),
+  );   
+      
       },
     );
   }

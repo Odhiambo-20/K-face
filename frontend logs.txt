@@ -1,0 +1,877 @@
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=CLOSING, error=null}
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageAnalysis-6dc97a1c-b829-40f8-a340-7a53dd12159d183421849 INACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use cases [androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956, androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931, androidx.camera.core.ImageAnalysis-6dc97a1c-b829-40f8-a340-7a53dd12159d183421849] now ATTACHED
+D/Camera2CameraControlImp( 4092): setActive: isActive = true
+D/UseCaseAttachState( 4092): All use case: [androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931, androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956, androidx.camera.core.ImageAnalysis-6dc97a1c-b829-40f8-a340-7a53dd12159d183421849] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931, androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Skipping Capture Session state check due to current camera state: CLOSING and previous session status: false
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Releasing session in state CLOSING
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: CLOSING --> REOPENING
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         OPENING               
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=OPENING, error=null} from OPENING and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=OPENING, error=null}
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931, androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931, androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageAnalysis-6dc97a1c-b829-40f8-a340-7a53dd12159d183421849 INACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931, androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use cases [androidx.camera.core.Preview-62bc7728-410c-41ea-99f4-6ae21bef6382259779956, androidx.camera.core.ImageCapture-8a7e2a34-da08-45cb-9072-e11419eecca1229128931, androidx.camera.core.ImageAnalysis-6dc97a1c-b829-40f8-a340-7a53dd12159d183421849] now DETACHED for camera
+D/UseCaseAttachState( 4092): All use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Skipping Capture Session state check due to current camera state: REOPENING and previous session status: false
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Releasing session in state REOPENING
+D/Camera2CameraControlImp( 4092): setActive: isActive = false
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/VideoUsageControl( 4092): resetDirectly: mVideoUsage reset!
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Closing camera.
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: REOPENING --> CLOSING
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         CLOSING               
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=CLOSING, error=null}
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageAnalysis-e91ec019-da75-40cb-909b-ca38bcf3eeaf213759069 INACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use cases [androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672, androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903, androidx.camera.core.ImageAnalysis-e91ec019-da75-40cb-909b-ca38bcf3eeaf213759069] now ATTACHED
+D/Camera2CameraControlImp( 4092): setActive: isActive = true
+D/UseCaseAttachState( 4092): All use case: [androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903, androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672, androidx.camera.core.ImageAnalysis-e91ec019-da75-40cb-909b-ca38bcf3eeaf213759069] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903, androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Skipping Capture Session state check due to current camera state: CLOSING and previous session status: false
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Releasing session in state CLOSING
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: CLOSING --> REOPENING
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         OPENING               
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=OPENING, error=null} from OPENING and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=OPENING, error=null}
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903, androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903, androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageAnalysis-e91ec019-da75-40cb-909b-ca38bcf3eeaf213759069 INACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903, androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use cases [androidx.camera.core.Preview-5d1bbb56-5738-44f5-b341-00a78eca2803232161672, androidx.camera.core.ImageCapture-c810204c-2e32-4fce-a874-4ebbfa85ad82104176903, androidx.camera.core.ImageAnalysis-e91ec019-da75-40cb-909b-ca38bcf3eeaf213759069] now DETACHED for camera
+D/UseCaseAttachState( 4092): All use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Skipping Capture Session state check due to current camera state: REOPENING and previous session status: false
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Releasing session in state REOPENING
+D/Camera2CameraControlImp( 4092): setActive: isActive = false
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/VideoUsageControl( 4092): resetDirectly: mVideoUsage reset!
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Closing camera.
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: REOPENING --> CLOSING
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         CLOSING               
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=CLOSING, error=null}
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} CameraDevice.onClosed()
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: CLOSING --> INITIALIZED
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         CLOSED                
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 0 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=CLOSED, error=null} from CLOSED and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=CLOSED, error=null}
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Unable to configure camera cancelled
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978 INACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use cases [androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913, androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978] now ATTACHED
+D/Camera2CameraControlImp( 4092): setActive: isActive = true
+D/UseCaseAttachState( 4092): All use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913, androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Skipping Capture Session state check due to current camera state: INITIALIZED and previous session status: false
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Releasing session in state INITIALIZED
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Attempting to force open the camera.
+D/CameraStateRegistry( 4092): tryOpenCamera(Camera@777c5b9[id=1]) [Available Cameras: 1, Already Open: false (Previous state: CLOSED)] --> SUCCESS
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         OPENING               
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Opening camera.
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: INITIALIZED --> OPENING
+D/CameraStateMachine( 4092): New public camera state CameraState{type=OPENING, error=null} from OPENING and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=OPENING, error=null}
+D/UseCaseAttachState( 4092): All use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913, androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978] for camera: 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraManagerGlobal( 4092): shouldHideCamera, current packageName: com.example.ux
+D/CameraManagerGlobal( 4092): shouldHideCamera, current packageName: com.example.ux
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978 INACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913] for camera: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913] for camera: 1
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} CameraDevice.onOpened()
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: OPENING --> OPENED
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         OPEN                  
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=OPEN, error=null} from OPEN and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=OPEN, error=null}
+D/UseCaseAttachState( 4092): All use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913, androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978] for camera: 1
+D/SyncCaptureSessionBase( 4092): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@55ca0f1] getSurface done with results: [Surface(name=null mNativeObject=-5476376671146543104)/@0xeb87fc1, Surface(name=null mNativeObject=-5476376671150645248)/@0x30e4a7b, Surface(name=null mNativeObject=-5476376671145824256)/@0xde96098]
+D/CaptureSession( 4092): Opening capture session.
+D/Camera2CaptureRequestBuilder( 4092): template type = 1
+D/SyncCaptureSessionImpl( 4092): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@55ca0f1] start openCaptureSession
+D/DeferrableSurface( 4092): use count+1, useCount=2 androidx.camera.core.SurfaceRequest$2@b982fea
+D/DeferrableSurface( 4092): New surface in use[total_surfaces=4, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@9a1308d}
+D/DeferrableSurface( 4092): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@9a1308d
+D/DeferrableSurface( 4092): New surface in use[total_surfaces=4, used_surfaces=3](androidx.camera.core.impl.ImmediateSurface@a7c0790}
+D/DeferrableSurface( 4092): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@a7c0790
+D/SyncCaptureSessionImpl( 4092): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@55ca0f1] Session onConfigured()
+D/CaptureSession( 4092): Attempting to send capture request onConfigured
+D/CaptureSession( 4092): Issuing request for session.
+D/Camera2CaptureRequestBuilder( 4092): createCaptureRequest
+D/CaptureSession( 4092): CameraCaptureSession.onConfigured() mState=OPENED
+D/CaptureSession( 4092): CameraCaptureSession.onReady() OPENED
+D/mali_gralloc( 4092): register: id=3b100065d3b, handle=0xb400006ec3d05ee0, importpid=4092
+D/mali_gralloc( 4092): register: id=3b100065d3c, handle=0xb400006fdbb437e0, importpid=4092
+D/mali_gralloc( 4092): register: id=3b100065d3d, handle=0xb400006ec3d066c0, importpid=4092
+D/mali_gralloc( 4092): register: id=3b100065d3e, handle=0xb400006ec3d067a0, importpid=4092
+D/mali_gralloc( 4092): register: id=3b100065d40, handle=0xb400006ec3d05d20, importpid=4092
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/flutter ( 4092): Camera: 960.0x720.0  ratio: 1.3333333333333333
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d41, handle=0xb400006ec3d06a40, importpid=4092
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use case androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978 ACTIVE
+D/UseCaseAttachState( 4092): Active and attached use case: [androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913, androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978] for camera: 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CaptureSession( 4092): Attempting to submit CaptureRequest after setting
+D/CaptureSession( 4092): Issuing request for session.
+D/Camera2CaptureRequestBuilder( 4092): createCaptureRequest
+D/mali_gralloc( 4092): register: id=3b100065d43, handle=0xb400006ec3d05e00, importpid=4092
+D/mali_gralloc( 4092): register: id=3b100065d44, handle=0xb400006ec3d06b20, importpid=4092
+W/1.raster( 4092): type=1400 audit(0.0:446795): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d45, handle=0xb400006ec3d06f80, importpid=4092
+W/1.raster( 4092): type=1400 audit(0.0:446796): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+W/1.raster( 4092): type=1400 audit(0.0:446797): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d46, handle=0xb400006ec3d058c0, importpid=4092
+W/1.raster( 4092): type=1400 audit(0.0:446798): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d47, handle=0xb400006ec3d06ce0, importpid=4092
+W/1.raster( 4092): type=1400 audit(0.0:446799): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446800): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d48, handle=0xb400006ec3d07bc0, importpid=4092
+I/DMABUFHEAPS( 4092): Using DMA-BUF heap named: protected
+W/1.raster( 4092): type=1400 audit(0.0:446801): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 601KB AllocSpace bytes, 9(4068KB) LOS objects, 49% free, 6588KB/12MB, paused 276us,5.079ms total 29.747ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446802): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d49, handle=0xb400006ec3d07300, importpid=4092
+D/TransportRuntime.JobInfoScheduler( 4092): Scheduling upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) with jobId=1741759195 in 86400000ms(Backend next call timestamp 0). Attempt 1
+D/CompatChangeReporter( 4092): Compat change id reported: 253665015; UID 10293; state: ENABLED
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d4a, handle=0xb400006ec3d08480, importpid=4092
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/mali_gralloc( 4092): register: id=3b100065d4b, handle=0xb400006ec3d08560, importpid=4092
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/DynamiteModule( 4092): Considering local module com.google.mlkit.dynamite.face:10000 and remote module com.google.mlkit.dynamite.face:0
+I/DynamiteModule( 4092): Selected local version of com.google.mlkit.dynamite.face
+D/TransportRuntime.SQLiteEventStore( 4092): Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/nativeloader( 4092): Load /data/app/~~rvuDEMS07_UeCMbLje4D4A==/com.example.ux-MTpSMecPQBtgSwvsffOcTw==/lib/arm64/libface_detector_v2_jni.so using class loader ns clns-7 (caller=/data/app/~~rvuDEMS07_UeCMbLje4D4A==/com.example.ux-MTpSMecPQBtgSwvsffOcTw==/base.apk!classes6.dex): ok
+D/TransportRuntime.JobInfoScheduler( 4092): Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 1052KB AllocSpace bytes, 15(8500KB) LOS objects, 49% free, 6877KB/13MB, paused 2.255ms,7.163ms total 73.254ms
+D/TransportRuntime.SQLiteEventStore( 4092): Storing event with priority=DEFAULT, name=FIREBASE_ML_SDK for destination cct
+D/TransportRuntime.JobInfoScheduler( 4092): Scheduling upload for context TransportContext(cct, DEFAULT, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) with jobId=1736778458 in 30000ms(Backend next call timestamp 1776323918395). Attempt 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): initialize.start()
+D/TransportRuntime.SQLiteEventStore( 4092): Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+I/native  ( 4092): I0000 00:00:1776327388.319755    4660 face_detector_v2_jni.cc:34] Loading models_bundled/fssd_25_8bit_v2.tflite
+I/native  ( 4092): I0000 00:00:1776327388.320172    4660 face_detector_v2_jni.cc:34] Loading models_bundled/fssd_25_8bit_gray_v2.tflite
+I/native  ( 4092): I0000 00:00:1776327388.320442    4660 face_detector_v2_jni.cc:34] Loading models_bundled/fssd_anchors_v2.pb
+I/native  ( 4092): I0000 00:00:1776327388.320590    4660 face_detector_v2_jni.cc:34] Loading models_bundled/LMprec_600.emd
+D/TransportRuntime.JobInfoScheduler( 4092): Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+I/native  ( 4092): I0000 00:00:1776327388.332270    4660 face_detector_v2_jni.cc:34] Loading models_bundled/BCLlefteyeclosed_200.emd
+I/native  ( 4092): I0000 00:00:1776327388.332710    4660 face_detector_v2_jni.cc:34] Loading models_bundled/BCLrighteyeclosed_200.emd
+I/native  ( 4092): I0000 00:00:1776327388.332931    4660 face_detector_v2_jni.cc:34] Loading models_bundled/BCLjoy_200.emd
+I/native  ( 4092): I0000 00:00:1776327388.333207    4660 face_detector_v2_jni.cc:34] Loading models_bundled/MFT_fssd_fastgray.pb
+I/native  ( 4092): I0000 00:00:1776327388.333305    4660 face_detector_v2_jni.cc:34] Loading models_bundled/contours.tfl
+I/native  ( 4092): I0000 00:00:1776327388.347621    4660 face_detector_v2_jni.cc:34] Loading models_bundled/blazeface.tfl
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Initialized TensorFlow Lite runtime.
+W/libc    ( 4092): Access denied finding property "ro.hardware.chipname"
+I/tflite  ( 4092): Created TensorFlow Lite XNNPACK delegate for CPU.
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): initialize.end()
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 385KB AllocSpace bytes, 10(6092KB) LOS objects, 24% free, 10MB/13MB, paused 535us,5.061ms total 33.875ms
+D/TransportRuntime.SQLiteEventStore( 4092): Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+I/flutter ( 4092): [Face] No faces detected
+D/TransportRuntime.JobInfoScheduler( 4092): Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+D/TransportRuntime.SQLiteEventStore( 4092): Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+D/TransportRuntime.JobInfoScheduler( 4092): Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 456KB AllocSpace bytes, 16(9144KB) LOS objects, 49% free, 8472KB/16MB, paused 840us,7.039ms total 68.077ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+W/1.raster( 4092): type=1400 audit(0.0:446808): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446809): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 348KB AllocSpace bytes, 11(6432KB) LOS objects, 46% free, 7548KB/13MB, paused 506us,8.076ms total 35.935ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+W/1.raster( 4092): type=1400 audit(0.0:446810): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 420KB AllocSpace bytes, 17(9484KB) LOS objects, 49% free, 6936KB/13MB, paused 662us,7.865ms total 64.287ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 345KB AllocSpace bytes, 9(5416KB) LOS objects, 40% free, 8237KB/13MB, paused 586us,6.724ms total 38.028ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446822): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446823): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446824): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446825): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+W/1.raster( 4092): type=1400 audit(0.0:446826): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 384KB AllocSpace bytes, 17(10MB) LOS objects, 49% free, 7008KB/13MB, paused 668us,6.197ms total 64.895ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 384KB AllocSpace bytes, 11(6432KB) LOS objects, 48% free, 7190KB/13MB, paused 797us,5.391ms total 32.025ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 384KB AllocSpace bytes, 9(5416KB) LOS objects, 40% free, 8476KB/13MB, paused 247us,6.685ms total 29.696ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 356KB AllocSpace bytes, 16(10MB) LOS objects, 49% free, 7120KB/13MB, paused 688us,8.122ms total 68.220ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+W/1.raster( 4092): type=1400 audit(0.0:446838): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446839): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 316KB AllocSpace bytes, 10(5756KB) LOS objects, 40% free, 6816KB/11MB, paused 682us,7.082ms total 34.174ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446840): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446841): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446842): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 376KB AllocSpace bytes, 10(6092KB) LOS objects, 33% free, 6614KB/10009KB, paused 752us,5.096ms total 29.751ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 384KB AllocSpace bytes, 16(10MB) LOS objects, 49% free, 6208KB/12MB, paused 712us,7.219ms total 60.260ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446853): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 384KB AllocSpace bytes, 9(5416KB) LOS objects, 41% free, 9924KB/16MB, paused 549us,7.159ms total 33.656ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446854): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446855): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+W/1.raster( 4092): type=1400 audit(0.0:446856): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446857): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 444KB AllocSpace bytes, 6(2712KB) LOS objects, 13% free, 9924KB/11MB, paused 647us,7.624ms total 34.178ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446868): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446869): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+W/1.raster( 4092): type=1400 audit(0.0:446870): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+W/1.raster( 4092): type=1400 audit(0.0:446871): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446872): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 446KB AllocSpace bytes, 10(6092KB) LOS objects, 45% free, 8176KB/14MB, paused 701us,5.235ms total 35.328ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446883): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446884): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446885): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446886): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446887): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 380KB AllocSpace bytes, 10(6092KB) LOS objects, 44% free, 6792KB/11MB, paused 557us,7.809ms total 34.651ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 352KB AllocSpace bytes, 9(5416KB) LOS objects, 38% free, 7560KB/11MB, paused 599us,6.852ms total 31.829ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 380KB AllocSpace bytes, 9(5416KB) LOS objects, 41% free, 9832KB/16MB, paused 544us,6.750ms total 32.045ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+W/1.raster( 4092): type=1400 audit(0.0:446898): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446899): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446900): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 292KB AllocSpace bytes, 15(8128KB) LOS objects, 49% free, 8600KB/16MB, paused 351us,6.855ms total 50.788ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446901): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+W/1.raster( 4092): type=1400 audit(0.0:446902): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 384KB AllocSpace bytes, 9(5416KB) LOS objects, 41% free, 9828KB/16MB, paused 704us,7.283ms total 34.963ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 356KB AllocSpace bytes, 16(9144KB) LOS objects, 49% free, 8504KB/16MB, paused 656us,7.248ms total 61.194ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 412KB AllocSpace bytes, 9(5416KB) LOS objects, 41% free, 9992KB/16MB, paused 603us,7.127ms total 34.426ms
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446913): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 348KB AllocSpace bytes, 9(5416KB) LOS objects, 28% free, 8268KB/11MB, paused 583us,7.617ms total 35.770ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446914): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+W/1.raster( 4092): type=1400 audit(0.0:446915): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+W/1.raster( 4092): type=1400 audit(0.0:446916): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446917): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 444KB AllocSpace bytes, 9(5416KB) LOS objects, 40% free, 8488KB/13MB, paused 931us,7.576ms total 38.350ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 381KB AllocSpace bytes, 9(5416KB) LOS objects, 41% free, 8312KB/13MB, paused 768us,15.134ms total 41.825ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 380KB AllocSpace bytes, 9(5416KB) LOS objects, 40% free, 8488KB/13MB, paused 780us,7.503ms total 34.211ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446928): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446929): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446930): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+W/1.raster( 4092): type=1400 audit(0.0:446931): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446932): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 388KB AllocSpace bytes, 16(9480KB) LOS objects, 49% free, 6764KB/13MB, paused 781us,6.577ms total 66.969ms
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 380KB AllocSpace bytes, 10(6092KB) LOS objects, 44% free, 6448KB/11MB, paused 808us,6.331ms total 29.877ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+W/1.raster( 4092): type=1400 audit(0.0:446943): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446944): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446945): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446946): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 356KB AllocSpace bytes, 9(5416KB) LOS objects, 40% free, 8544KB/13MB, paused 736us,8.001ms total 36.060ms
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446947): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 316KB AllocSpace bytes, 9(5416KB) LOS objects, 32% free, 9596KB/13MB, paused 693us,7.417ms total 39.784ms
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 352KB AllocSpace bytes, 9(4068KB) LOS objects, 28% free, 9280KB/12MB, paused 548us,7.338ms total 35.098ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446958): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 440KB AllocSpace bytes, 30(16MB) LOS objects, 60% free, 9972KB/24MB, paused 994us,6.770ms total 38.447ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+W/1.raster( 4092): type=1400 audit(0.0:446959): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446960): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+W/1.raster( 4092): type=1400 audit(0.0:446961): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+W/1.raster( 4092): type=1400 audit(0.0:446962): avc:  denied  { getattr } for  name="/" dev="dmabuf" ino=1 scontext=u:r:untrusted_app:s0:c37,c257,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=filesystem permissive=0 app=com.example.ux
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/ImeTracker( 4092): com.example.ux:4447fa06: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4092): showSoftInput() view=io.flutter.embedding.android.FlutterView{5698508 VFE...... .F...... 0,0-720,1544 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/InputConnectionAdaptor( 4092): The input method toggled cursor monitoring on
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+D/InsetsController( 4092): show(ime(), fromIme=true)
+D/mali_gralloc( 4092): register: id=3b100065d54, handle=0xb400006fdbda8820, importpid=4092
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+I/com.example.ux( 4092): Background young concurrent mark compact GC freed 461KB AllocSpace bytes, 9(5416KB) LOS objects, 0% free, 16MB/16MB, paused 772us,7.507ms total 86.608ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+I/com.example.ux( 4092): Background concurrent mark compact GC freed 600KB AllocSpace bytes, 30(17MB) LOS objects, 49% free, 5812KB/11MB, paused 1.162ms,10.087ms total 75.942ms
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/TransportRuntime.SQLiteEventStore( 4092): Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+D/mali_gralloc( 4092): unregister: id=3b100065d40, handle=0xb400006ec3d05d20, base=0x0, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d54, handle=0xb400006fdbda8820, base=0x0, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d3d, handle=0xb400006ec3d066c0, base=0x0, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d3e, handle=0xb400006ec3d067a0, base=0x0, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d3b, handle=0xb400006ec3d05ee0, base=0x0, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d43, handle=0xb400006ec3d05e00, base=0x0, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d3c, handle=0xb400006fdbb437e0, base=0x0, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d41, handle=0xb400006ec3d06a40, base=0x0, importpid=4092, clone_count=0
+D/TransportRuntime.JobInfoScheduler( 4092): Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+I/DynamiteModule( 4092): Considering local module com.google.mlkit.dynamite.face:10000 and remote module com.google.mlkit.dynamite.face:0
+I/DynamiteModule( 4092): Selected local version of com.google.mlkit.dynamite.face
+V/FaceDetectorV2Jni( 4092): initialize.start()
+D/TransportRuntime.SQLiteEventStore( 4092): Storing event with priority=DEFAULT, name=FIREBASE_ML_SDK for destination cct
+I/native  ( 4092): I0000 00:00:1776327400.058876    4677 face_detector_v2_jni.cc:34] Loading models_bundled/fssd_25_8bit_v2.tflite
+I/native  ( 4092): I0000 00:00:1776327400.059627    4677 face_detector_v2_jni.cc:34] Loading models_bundled/fssd_25_8bit_gray_v2.tflite
+I/native  ( 4092): I0000 00:00:1776327400.060146    4677 face_detector_v2_jni.cc:34] Loading models_bundled/fssd_anchors_v2.pb
+I/native  ( 4092): I0000 00:00:1776327400.060510    4677 face_detector_v2_jni.cc:34] Loading models_bundled/LMprec_600.emd
+D/DeferrableSurface( 4092): surface closed,  useCount=2 closed=true androidx.camera.core.SurfaceRequest$2@b982fea
+D/DeferrableSurface( 4092): surface closed,  useCount=0 closed=true androidx.camera.core.processing.SurfaceEdge$SettableSurface@538b3de
+D/DeferrableSurface( 4092): Surface terminated[total_surfaces=3, used_surfaces=3](androidx.camera.core.processing.SurfaceEdge$SettableSurface@538b3de}
+D/DeferrableSurface( 4092): use count-1,  useCount=1 closed=true androidx.camera.core.SurfaceRequest$2@b982fea
+W/ScreenFlashWrapper( 4092): completePendingScreenFlashClear: none pending!
+D/ImageCapture( 4092): clearPipeline
+D/DeferrableSurface( 4092): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@9a1308d
+D/DeferrableSurface( 4092): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@a7c0790
+W/ScreenFlashWrapper( 4092): completePendingScreenFlashClear: none pending!
+D/TransportRuntime.JobInfoScheduler( 4092): Upload for context TransportContext(cct, DEFAULT, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Use cases [androidx.camera.core.Preview-6c0bd40e-abb1-451c-8a0c-4cab9a601124183615913, androidx.camera.core.ImageCapture-c4e41e6d-fd62-4cb2-9e4c-92d52504904c229584988, androidx.camera.core.ImageAnalysis-b6792fed-d12e-49b1-a211-16a341639f26101073978] now DETACHED for camera
+I/native  ( 4092): I0000 00:00:1776327400.074053    4677 face_detector_v2_jni.cc:34] Loading models_bundled/BCLlefteyeclosed_200.emd
+I/native  ( 4092): I0000 00:00:1776327400.074675    4677 face_detector_v2_jni.cc:34] Loading models_bundled/BCLrighteyeclosed_200.emd
+I/native  ( 4092): I0000 00:00:1776327400.074966    4677 face_detector_v2_jni.cc:34] Loading models_bundled/BCLjoy_200.emd
+D/UseCaseAttachState( 4092): All use case: [] for camera: 1
+I/native  ( 4092): I0000 00:00:1776327400.076267    4677 face_detector_v2_jni.cc:34] Loading models_bundled/MFT_fssd_fastgray.pb
+I/native  ( 4092): I0000 00:00:1776327400.076679    4677 face_detector_v2_jni.cc:34] Loading models_bundled/contours.tfl
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Resetting Capture Session
+D/SyncCaptureSessionImpl( 4092): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@55ca0f1] Session call close()
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Releasing session in state OPENED
+D/Camera2CameraControlImp( 4092): setActive: isActive = false
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+E/BufferQueueProducer( 4092): [ImageReader-960x720f22m5-4092-23](id:ffc00000019,api:4,p:1108,c:4092) dequeueBuffer: BufferQueue has been abandoned
+D/CameraMetadataJV( 4092): mPackageName: com.example.ux, mCameraId = 1
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+E/BufferQueueProducer( 4092): [ImageReader-960x720f22m5-4092-23](id:ffc00000019,api:4,p:1108,c:4092) queueBuffer: BufferQueue has been abandoned
+D/VideoUsageControl( 4092): resetDirectly: mVideoUsage reset!
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Closing camera.
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: OPENED --> CLOSING
+D/CameraStateRegistry( 4092): Recalculating open cameras:
+D/CameraStateRegistry( 4092): Camera                                       State                 
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Camera@17cd026[id=0]                         UNKNOWN               
+D/CameraStateRegistry( 4092): Camera@777c5b9[id=1]                         CLOSING               
+D/CameraStateRegistry( 4092): -------------------------------------------------------------------
+D/CameraStateRegistry( 4092): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 4092): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
+D/CameraStateMachine( 4092): Publishing new public camera state CameraState{type=CLOSING, error=null}
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Skipping Capture Session state check due to current camera state: CLOSING and previous session status: false
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Releasing session in state CLOSING
+D/SyncCaptureSessionImpl( 4092): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@55ca0f1] Session call super.close()
+I/native  ( 4092): I0000 00:00:1776327400.091835    4677 face_detector_v2_jni.cc:34] Loading models_bundled/blazeface.tfl
+V/CameraDevice-JV-1( 4092): Resuming stop of failed repeating request with id: 1
+D/UseCaseAttachState( 4092): Active and attached use case: [] for camera: 1
+D/CaptureSession( 4092): onSessionFinished()
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} closing camera
+I/ImeTracker( 4092): com.example.ux:4447fa06: onShown
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): initialize.end()
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.start()
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+E/BufferQueueProducer( 4092): [ImageReader-960x720f22m5-4092-23](id:ffc00000019,api:4,p:1108,c:4092) cancelBuffer: BufferQueue has been abandoned
+E/BufferQueueProducer( 4092): [ImageReader-960x720f22m5-4092-23](id:ffc00000019,api:4,p:1108,c:4092) cancelBuffer: BufferQueue has been abandoned
+E/BufferQueueProducer( 4092): [ImageReader-960x720f22m5-4092-23](id:ffc00000019,api:4,p:1108,c:4092) cancelBuffer: BufferQueue has been abandoned
+I/tflite  ( 4092): Replacing 65 out of 65 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+V/FaceDetectorV2Jni( 4092): detectFacesImageByteArray.end()
+I/flutter ( 4092): [Face] No faces detected
+D/mali_gralloc( 4092): unregister: id=3b100065d44, handle=0xb400006ec3d06b20, base=0x6ff4872000, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d45, handle=0xb400006ec3d06f80, base=0x6ff4774000, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d46, handle=0xb400006ec3d058c0, base=0x6ff3e2c000, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d47, handle=0xb400006ec3d06ce0, base=0x6ff374e000, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d48, handle=0xb400006ec3d07bc0, base=0x6ff3650000, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d49, handle=0xb400006ec3d07300, base=0x6ff4126000, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d4a, handle=0xb400006ec3d08480, base=0x6ff4028000, importpid=4092, clone_count=0
+D/mali_gralloc( 4092): unregister: id=3b100065d4b, handle=0xb400006ec3d08560, base=0x6ff3f2a000, importpid=4092, clone_count=0
+D/CameraManagerGlobal( 4092): shouldHideCamera, current packageName: com.example.ux
+D/CameraManagerGlobal( 4092): shouldHideCamera, current packageName: com.example.ux
+D/DeferrableSurface( 4092): use count-1,  useCount=0 closed=true androidx.camera.core.SurfaceRequest$2@b982fea
+D/DeferrableSurface( 4092): Surface no longer in use[total_surfaces=3, used_surfaces=2](androidx.camera.core.SurfaceRequest$2@b982fea}
+D/DeferrableSurface( 4092): Surface terminated[total_surfaces=2, used_surfaces=2](androidx.camera.core.SurfaceRequest$2@b982fea}
+D/DeferrableSurface( 4092): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@9a1308d
+D/DeferrableSurface( 4092): Surface no longer in use[total_surfaces=2, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@9a1308d}
+D/DeferrableSurface( 4092): Surface terminated[total_surfaces=1, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@9a1308d}
+D/DeferrableSurface( 4092): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@a7c0790
+D/DeferrableSurface( 4092): Surface no longer in use[total_surfaces=1, used_surfaces=0](androidx.camera.core.impl.ImmediateSurface@a7c0790}
+D/DeferrableSurface( 4092): Surface terminated[total_surfaces=0, used_surfaces=0](androidx.camera.core.impl.ImmediateSurface@a7c0790}
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} CameraDevice.onClosed()
+D/Camera2CameraImpl( 4092): {Camera@777c5b9[id=1]} Transitioning camera internal state: CLOSING --> INITIALIZED

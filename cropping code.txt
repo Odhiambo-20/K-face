@@ -1,0 +1,366 @@
+from __future__ import annotations
+
+import base64
+import json
+import logging
+import shutil
+import tempfile
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+
+import cv2
+import numpy as np
+
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+
+from .pipeline_adapter import (
+    EnrollmentArtifacts,
+    artifacts_to_json_dict,
+    enroll_video,
+    save_enrollment_record,
+)
+
+logger = logging.getLogger(__name__)
+
+app = FastAPI(title="Biometric Enrollment API")
+
+DATA_DIR   = Path(__file__).resolve().parent / "data" / "enrollments"
+FRAMES_DIR = Path(__file__).resolve().parent / "data" / "frames"
+
+
+def extract_and_crop_frames(video_path: Path, output_dir: Path, username: str) -> dict:
+    """
+    Extract frames from video, save originals and cropped versions.
+    Returns dict with counts and paths.
+    
+    Crop ratio: 1.20 from center means we keep 1/1.2 = 0.833 of each dimension
+    This results in a 20% crop from all sides (10% top, 10% bottom, 10% left, 10% right)
+    """
+    cap = cv2.VideoCapture(str(video_path))
+    if not cap.isOpened():
+        logger.warning(f"Cannot open video for frame extraction: {video_path}")
+        return {
+            "total_frames": 0,
+            "original_dir": "",
+            "cropped_dir": "",
+        }
+    
+    # Create user-specific directories
+    user_frames_dir = output_dir / username
+    frames_dir = user_frames_dir / "original_frames"
+    cropped_dir = user_frames_dir / "cropped_frames"
+    
+    frames_dir.mkdir(parents=True, exist_ok=True)
+    cropped_dir.mkdir(parents=True, exist_ok=True)
+    
+    frame_count = 0
+    crop_ratio = 1.20  # 20% crop from center means keep 1/1.2 = 0.833 of each dimension
+    
+    logger.info(f"Extracting frames from video: {video_path}")
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        
+        # Get frame dimensions
+        h, w = frame.shape[:2]
+        
+        # Save original frame
+        original_path = frames_dir / f"frame_{frame_count:04d}.jpg"
+        cv2.imwrite(str(original_path), frame)
+        
+        # Crop from center with 1.20 ratio
+        # New dimensions = original / 1.20 (keep 83.3% of original)
+        new_h = int(h / crop_ratio)
+        new_w = int(w / crop_ratio)
+        
+        # Calculate crop box (center)
+        start_y = (h - new_h) // 2
+        end_y = start_y + new_h
+        start_x = (w - new_w) // 2
+        end_x = start_x + new_w
+        
+        # Ensure crop box is within bounds
+        start_y = max(0, start_y)
+        end_y = min(h, end_y)
+        start_x = max(0, start_x)
+        end_x = min(w, end_x)
+        
+        cropped = frame[start_y:end_y, start_x:end_x]
+        
+        # Save cropped frame
+        cropped_path = cropped_dir / f"cropped_{frame_count:04d}.jpg"
+        cv2.imwrite(str(cropped_path), cropped)
+        
+        frame_count += 1
+        
+        # Limit to reasonable number (e.g., 30 frames from 1 sec video at 30fps)
+        # But don't break early - we want all frames for completeness
+        if frame_count >= 60:  # Max 60 frames (2 seconds at 30fps)
+            logger.info(f"Reached maximum frame limit (60), stopping extraction")
+            break
+    
+    cap.release()
+    
+    logger.info(f"Extracted {frame_count} frames for user {username}")
+    logger.info(f"  Original frames: {frames_dir}")
+    logger.info(f"  Cropped frames:  {cropped_dir}")
+    
+    return {
+        "total_frames": frame_count,
+        "original_dir": str(frames_dir),
+        "cropped_dir": str(cropped_dir),
+    }
+
+
+def _extract_best_frame(video_path: Path) -> np.ndarray | None:
+    """
+    Opens the video and returns the single sharpest frame (highest Laplacian
+    variance) as a BGR numpy array, or None if the video cannot be read.
+    """
+    cap = cv2.VideoCapture(str(video_path))
+    if not cap.isOpened():
+        return None
+
+    best_frame: np.ndarray | None = None
+    best_score = -1.0
+
+    while True:
+        ok, frame = cap.read()
+        if not ok:
+            break
+        gray  = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        score = cv2.Laplacian(gray, cv2.CV_64F).var()
+        if score > best_score:
+            best_score = score
+            best_frame = frame.copy()
+
+    cap.release()
+    return best_frame
+
+
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+
+@app.post("/enroll")
+async def enroll(
+    username: str = Form(...),
+    video: UploadFile = File(...),
+    frame_width: int  = Form(0),
+    frame_height: int = Form(0),
+) -> dict[str, object]:
+    """
+    Accepts:
+      - username      : plain-text username entered by the user
+      - video         : raw video file recorded on-device by the Flutter app
+      - frame_width   : original camera sensor frame width  (pixels)
+      - frame_height  : original camera sensor frame height (pixels)
+
+    Server saves to disk
+    ────────────────────
+      data/enrollments/<username>.json   → username, hashkey, helper_data,
+                                           helperBits, nonce, bitVector,
+                                           quantisationIntervals, metadata,
+                                           embedding (list[float])
+      data/frames/<username>/original_frames/    → all original frames from video
+      data/frames/<username>/cropped_frames/     → cropped frames (1.20 from center)
+      data/frames/<username>_best.jpg            → single sharpest frame
+
+    Flutter app receives ONLY
+    ─────────────────────────
+      { "hashkey": "<hex>" }
+    """
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    FRAMES_DIR.mkdir(parents=True, exist_ok=True)
+
+    #  Reject duplicate username 
+    record_path = DATA_DIR / f"{username}.json"
+    if record_path.exists():
+        raise HTTPException(
+            status_code=409,
+            detail="You already have an account. Please log in.",
+        )
+
+    #  Reject duplicate face (same person, different username) 
+    # We must extract the embedding BEFORE saving, so we do a quick pre-check
+    # by loading all stored embeddings and comparing cosine similarity.
+    # The actual full pipeline runs later; here we do an early lightweight scan.
+    _existing_embeddings: list[tuple[str, np.ndarray]] = []
+    for existing_json in DATA_DIR.glob("*.json"):
+        try:
+            existing_record = json.loads(existing_json.read_text(encoding="utf-8"))
+            emb = existing_record.get("enrollments", [{}])[0].get("embedding")
+            if emb:
+                _existing_embeddings.append(
+                    (existing_record.get("username", existing_json.stem),
+                     np.array(emb, dtype=np.float32))
+                )
+        except Exception:
+            continue
+
+    #  Save the incoming video to a temp file 
+    suffix = Path(video.filename or "enrollment.mp4").suffix or ".mp4"
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        shutil.copyfileobj(video.file, tmp)
+        temp_path = Path(tmp.name)
+
+    try:
+        logger.info("Running enrollment pipeline for username=%s", username)
+
+        #  Run RetinaFace + AdaFace + LDPC pipeline 
+        artifacts: EnrollmentArtifacts = enroll_video(temp_path)
+
+        #  Check new embedding against all stored embeddings 
+        FACE_SIMILARITY_THRESHOLD = 0.50  # cosine similarity; tune if needed
+        new_emb = artifacts.embedding.astype(np.float32)
+        new_emb_norm = new_emb / (np.linalg.norm(new_emb) + 1e-10)
+
+        for stored_username, stored_emb in _existing_embeddings:
+            stored_norm = stored_emb / (np.linalg.norm(stored_emb) + 1e-10)
+            similarity = float(np.dot(new_emb_norm, stored_norm))
+            logger.info(
+                "Face similarity: new_user=%s vs stored_user=%s  sim=%.4f",
+                username, stored_username, similarity,
+            )
+            if similarity >= FACE_SIMILARITY_THRESHOLD:
+                raise HTTPException(
+                    status_code=409,
+                    detail="You already have an account. Please log in.",
+                )
+
+        #  Extract ALL frames and save originals + cropped versions 
+        frame_extraction_result = extract_and_crop_frames(temp_path, FRAMES_DIR, username)
+        
+        #  Extract & save the single best (sharpest) frame for preview 
+        best_frame = _extract_best_frame(temp_path)
+        ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+        best_frame_filename = f"{username}_{ts}_best.jpg"
+        best_frame_path = FRAMES_DIR / best_frame_filename
+
+        if best_frame is not None:
+            cv2.imwrite(str(best_frame_path), best_frame)
+            logger.info("Best frame saved → %s", best_frame_path)
+        else:
+            logger.warning(
+                "Could not extract any frame from video for username=%s", username
+            )
+            best_frame_filename = None
+
+        #  Format the original sensor frame size as "W X H" 
+        original_frame_size = (
+            f"{min(frame_width, frame_height)} X {max(frame_width, frame_height)}"
+            if frame_width > 0 and frame_height > 0
+            else "unknown"
+        )
+        
+        logger.info(
+            "Original camera frame size for username=%s: %s",
+            username, original_frame_size,
+        )
+
+        #  Build helper_data 
+        helper_data = {
+            "username":          username,
+            "originalFrameSize": original_frame_size,   # e.g. "640 X 480"
+            "embeddingModel":    "AdaFace IR-101",
+            "detectorModel":     "RetinaFace",
+            "pipeline":          "RetinaFace + AdaFace IR-101 + Gray-code quantisation + LDPC fuzzy commitment",
+            "embeddingNorm":     artifacts.metadata.get("embedding_norm"),
+            "embeddingMean":     artifacts.metadata.get("embedding_mean"),
+            "embeddingStd":      artifacts.metadata.get("embedding_std"),
+            "quantScale":        artifacts.metadata.get("quant_scale"),
+            "quantBits":         artifacts.metadata.get("quant_bits"),
+            "bitvecLen":         artifacts.metadata.get("bitvec_len"),
+            "ldpcCodeN":         artifacts.metadata.get("ldpc_code_n"),
+            "ldpcCodeK":         artifacts.metadata.get("ldpc_code_k"),
+        }
+
+        #  Retrieve the raw embedding vector from artifacts 
+        # EnrollmentArtifacts stores the final averaged embedding as
+        # artifacts.embedding (np.ndarray shape [512]).  Serialised as
+        # list[float] so it is human-readable inside the JSON.
+        embedding_list: list[float] = (
+            artifacts.embedding.tolist()
+            if hasattr(artifacts, "embedding") and artifacts.embedding is not None
+            else []
+        )
+
+        #  Build the new enrollment entry 
+        new_entry = {
+            "enrolled_at": datetime.now(timezone.utc).isoformat(),
+            "hashkey":     artifacts.key_hash,
+            "helper_data": helper_data,
+            "embedding":   embedding_list,      # 512-dim float list
+            "best_frame_file": best_frame_filename,  # single best frame
+            "frame_extraction": {
+                "total_frames": frame_extraction_result["total_frames"],
+                "original_frames_dir": frame_extraction_result["original_dir"],
+                "cropped_frames_dir": frame_extraction_result["cropped_dir"],
+                "crop_ratio": 1.20,
+                "crop_description": "10% from top, bottom, left, right (center crop)"
+            },
+            "helperBits": {
+                "encoding":  "base64-packed-bits",
+                "bitLength": artifacts.helper_bit_length,
+                "data":      artifacts.helper_bits_b64,
+            },
+            "nonce": {
+                "encoding":  "base64-packed-bits",
+                "bitLength": artifacts.nonce_bit_length,
+                "data":      artifacts.nonce_bits_b64,
+            },
+            "bitVector": {
+                "encoding":  "base64-packed-bits",
+                "bitLength": artifacts.bitvec_length,
+                "data":      artifacts.bitvec_bits_b64,
+            },
+            "quantScale": artifacts.quant_scale,
+            "metadata": artifacts.metadata,
+        }
+
+        #  Write the user's JSON file (fresh — duplicate check above ensures
+        #    this file does not exist yet) 
+        record = {
+            "username":    username,
+            "enrollments": [new_entry],
+        }
+
+        record_path.write_text(
+            json.dumps(record, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
+
+        logger.info(
+            "Enrollment saved  username=%s  hashkey=%s  best_frame=%s  json=%s",
+            username,
+            artifacts.key_hash,
+            best_frame_path,
+            record_path,
+        )
+        
+        logger.info(
+            "Frame extraction summary for %s: %d frames extracted",
+            username,
+            frame_extraction_result["total_frames"]
+        )
+
+        #  Return ONLY the hashkey to the Flutter app 
+        return {"hashkey": artifacts.key_hash}
+
+    except HTTPException:
+        raise
+
+    except Exception as exc:
+        logger.error(
+            "Enrollment failed for username=%s\n%s",
+            username,
+            traceback.format_exc(),
+        )
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+    finally:
+        temp_path.unlink(missing_ok=True)

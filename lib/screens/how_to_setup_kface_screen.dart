@@ -20,6 +20,10 @@ class HowToSetupKfaceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final horizontal = (size.width * 0.08).clamp(18, 40).toDouble();
+    final title = draft.isLogin ? 'How to Log In to Kface' : 'How to Set Up Kface';
+    final description = draft.isLogin
+        ? 'Position your face in the camera frame, then look directly at the camera to recover your key.'
+        : 'First, position your face in the\ncamera frame. Then look at the camera';
 
     return AppBackground(
       child: Scaffold(
@@ -63,20 +67,20 @@ class HowToSetupKfaceScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'How to Set Up Kface',
+                Text(
+                  title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w700,
                     color: AppTheme.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'First, position your face in the\ncamera frame. Then look at the camera',
+                Text(
+                  description,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     height: 1.35,
                     fontWeight: FontWeight.w400,
