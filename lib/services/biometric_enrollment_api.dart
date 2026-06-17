@@ -26,10 +26,15 @@ class EnrollmentUploadResult {
 }
 
 const _kEndpointPrefKey = 'enrollment_api_url';
-// ngrok public tunnel URL — update this when your ngrok session restarts
+// TEMP TODAY: ngrok public tunnel URL.
+// Keep ngrok and the local backend running while remote testers use the app.
 
 const _kDevFallbackUrl =
-    'https://kface-backend-53376040704.us-central1.run.app/enroll';
+    'https://unphilosophic-madelaine-monomorphic.ngrok-free.dev/enroll';
+
+// ORIGINAL CLOUD RUN ENDPOINT - restore after today's ngrok test.
+// const _kDevFallbackUrl =
+//     'https://kface-backend-53376040704.us-central1.run.app/enroll';
 
 const _kCompileTimeEndpoint = String.fromEnvironment(
   'ENROLLMENT_API_URL',
@@ -37,9 +42,13 @@ const _kCompileTimeEndpoint = String.fromEnvironment(
 );
 
 // Required header to bypass ngrok's browser warning page on free tier
-//const _kNgrokHeaders = {
-  //'ngrok-skip-browser-warning': 'true',
-//};
+const _kNgrokHeaders = {
+  'ngrok-skip-browser-warning': 'true',
+};
+
+// TEMP TODAY: force the ngrok endpoint even if an older endpoint was saved
+// in SharedPreferences on the phone.
+const _kForceTodayNgrokEndpoint = true;
 
 class BiometricEnrollmentApi {
   BiometricEnrollmentApi({http.Client? client})
@@ -51,11 +60,20 @@ class BiometricEnrollmentApi {
   Future<String> getEndpoint() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString(_kEndpointPrefKey) ?? '';
+    if (_kForceTodayNgrokEndpoint) {
+      debugPrint(
+          '[EnrollmentApi] TEMP TODAY using ngrok endpoint: $_kCompileTimeEndpoint');
+      return _kCompileTimeEndpoint;
+    }
+
+    // ORIGINAL SAVED-ENDPOINT BEHAVIOR - active again when
+    // _kForceTodayNgrokEndpoint is false.
     if (saved.isNotEmpty) {
       debugPrint('[EnrollmentApi] Using saved endpoint: $saved');
       return saved;
     }
-    debugPrint('[EnrollmentApi] Using compile-time endpoint: $_kCompileTimeEndpoint');
+    debugPrint(
+        '[EnrollmentApi] Using compile-time endpoint: $_kCompileTimeEndpoint');
     return _kCompileTimeEndpoint;
   }
 
@@ -83,14 +101,6 @@ class BiometricEnrollmentApi {
         : enrollUrl;
   }
 
-
-
-
-
-
-
-
-
   Future<bool> checkUsernameAvailable(String username) async {
     final baseUrl = await _getBaseUrl();
     final uri = Uri.parse('$baseUrl/check-username')
@@ -99,11 +109,11 @@ class BiometricEnrollmentApi {
     debugPrint('[EnrollmentApi] Checking username availability: $uri');
 
     try {
-      final response = await _client
-          .get(uri)
-          .timeout(const Duration(seconds: 10));
+      final response =
+          await _client.get(uri).timeout(const Duration(seconds: 10));
 
-      debugPrint('[EnrollmentApi] Username check status: ${response.statusCode}');
+      debugPrint(
+          '[EnrollmentApi] Username check status: ${response.statusCode}');
       debugPrint('[EnrollmentApi] Username check body: ${response.body}');
 
       if (response.statusCode == 200) {
@@ -125,42 +135,24 @@ class BiometricEnrollmentApi {
     debugPrint('[EnrollmentApi] Checking login username: $uri');
 
     try {
-      final response = await _client
-          .get(uri)
-          .timeout(const Duration(seconds: 10));
+      final response =
+          await _client.get(uri).timeout(const Duration(seconds: 10));
 
-      debugPrint('[EnrollmentApi] Login username status: ${response.statusCode}');
+      debugPrint(
+          '[EnrollmentApi] Login username status: ${response.statusCode}');
       debugPrint('[EnrollmentApi] Login username body: ${response.body}');
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as Map<String, dynamic>;
         return body['exists'] == true;
       }
-      throw Exception('Login username check failed: HTTP ${response.statusCode}');
+      throw Exception(
+          'Login username check failed: HTTP ${response.statusCode}');
     } catch (e) {
       debugPrint('[EnrollmentApi] Login username check error: $e');
       rethrow;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   Future<EnrollmentUploadResult> uploadEnrollment({
     required EnrollmentDraft draft,
@@ -194,7 +186,8 @@ class BiometricEnrollmentApi {
       frameWidth: frameWidth,
       frameHeight: frameHeight,
       successMessage: 'Login successful!',
-      duplicateMessage: 'This account already exists. Please sign up with a different username.',
+      duplicateMessage:
+          'This account already exists. Please sign up with a different username.',
     );
   }
 
@@ -213,7 +206,8 @@ class BiometricEnrollmentApi {
     debugPrint('[EnrollmentApi] ATTEMPTING UPLOAD');
     debugPrint('[EnrollmentApi] URL: $url');
     debugPrint('[EnrollmentApi] Username: ${draft.username}');
-    debugPrint('[EnrollmentApi] Frame size: ${frameWidth.toInt()} x ${frameHeight.toInt()}');
+    debugPrint(
+        '[EnrollmentApi] Frame size: ${frameWidth.toInt()} x ${frameHeight.toInt()}');
     debugPrint('[EnrollmentApi] Video path: ${videoFile.path}');
 
     if (!await videoFile.exists()) {
@@ -228,7 +222,8 @@ class BiometricEnrollmentApi {
     }
 
     final fileSize = await videoFile.length();
-    debugPrint('[EnrollmentApi] Video size: ${(fileSize / 1024).toStringAsFixed(2)} KB');
+    debugPrint(
+        '[EnrollmentApi] Video size: ${(fileSize / 1024).toStringAsFixed(2)} KB');
 
     if (url.isEmpty) {
       debugPrint('[EnrollmentApi] ERROR: No URL configured');
@@ -254,10 +249,11 @@ class BiometricEnrollmentApi {
     final safeExt = _allowedVideoExts.contains(rawExt) ? rawExt : '.mp4';
     final filename = 'enrollment$safeExt';
 
-    debugPrint('[EnrollmentApi] Upload filename: $filename (raw path was: $rawName)');
+    debugPrint(
+        '[EnrollmentApi] Upload filename: $filename (raw path was: $rawName)');
 
     final request = http.MultipartRequest('POST', Uri.parse(url))
-      //..headers.addAll(_kNgrokHeaders)   // ← bypass ngrok browser warning
+      ..headers.addAll(_kNgrokHeaders) // bypass ngrok browser warning
       ..fields['username'] = draft.username
       ..fields['frame_width'] = frameWidth.toInt().toString()
       ..fields['frame_height'] = frameHeight.toInt().toString();
@@ -285,11 +281,13 @@ class BiometricEnrollmentApi {
       stopwatch.stop();
 
       debugPrint('[EnrollmentApi] Response status: ${response.statusCode}');
-      debugPrint('[EnrollmentApi] Response time: ${stopwatch.elapsedMilliseconds} ms');
+      debugPrint(
+          '[EnrollmentApi] Response time: ${stopwatch.elapsedMilliseconds} ms');
       debugPrint('[EnrollmentApi] Response body: ${response.body}');
 
       final ok = response.statusCode >= 200 && response.statusCode < 300;
-      String message = ok ? successMessage : 'Upload failed (HTTP ${response.statusCode})';
+      String message =
+          ok ? successMessage : 'Upload failed (HTTP ${response.statusCode})';
       String hashkey = '';
       // ← ADD THIS:
       debugPrint('[EnrollmentApi] Full response body: ${response.body}');
@@ -306,7 +304,7 @@ class BiometricEnrollmentApi {
           if (serverMessage.isNotEmpty) {
             message = serverMessage;
           }
-         if (!ok && response.statusCode == 409) {
+          if (!ok && response.statusCode == 409) {
             message = duplicateMessage;
           } else if (!ok) {
             // FastAPI returns errors as {"detail": "..."}
@@ -315,7 +313,8 @@ class BiometricEnrollmentApi {
           }
         } catch (e) {
           debugPrint('[EnrollmentApi] JSON parse error: $e');
-          debugPrint('[EnrollmentApi] Raw body that failed: "${response.body}"');
+          debugPrint(
+              '[EnrollmentApi] Raw body that failed: "${response.body}"');
         }
       }
 
@@ -336,7 +335,8 @@ class BiometricEnrollmentApi {
       return EnrollmentUploadResult(
         ok: false,
         hashkey: '',
-        message: 'Connection failed: $e\n\nMake sure the backend is running at:\n$url',
+        message:
+            'Connection failed: $e\n\nMake sure the backend is running at:\n$url',
         requestUrl: url,
         statusCode: null,
       );

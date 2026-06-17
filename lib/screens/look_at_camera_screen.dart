@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
 
@@ -40,8 +40,8 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
   static const double _maxNormW = 0.40;
   static const double _minNormH = 0.22;
   static const double _maxNormH = 0.50;
-  static const double _minArea  = 0.05;
-  static const double _maxArea  = 0.22;
+  static const double _minArea = 0.05;
+  static const double _maxArea = 0.22;
 
   // Consecutive good frames required before triggering capture
   static const int _requiredGoodFrames = 3;
@@ -95,8 +95,8 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+      DeviceOrientation.portraitUp,
+    ]);
     WidgetsBinding.instance.addObserver(this);
     _api.loadEndpoint().then((_) {
       if (mounted) setState(() {});
@@ -108,8 +108,8 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     SystemChrome.setPreferredOrientations(
-    DeviceOrientation.values,
-  );
+      DeviceOrientation.values,
+    );
     //_faceDetector.close();
     _controller?.dispose();
     _controller = null;
@@ -175,7 +175,8 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
           .where((c) => c.lensDirection == CameraLensDirection.front)
           .toList();
 
-      final front = frontCameras.isNotEmpty ? frontCameras.first : cameras.first;
+      final front =
+          frontCameras.isNotEmpty ? frontCameras.first : cameras.first;
 
       final controller = await _buildFrontCameraController(front);
       _controller = controller;
@@ -194,7 +195,8 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
       if (controller.value.isInitialized) {
         final size = controller.value.previewSize;
         if (size != null) {
-          debugPrint('Camera: ${size.width}x${size.height}  ratio: ${size.width / size.height}');
+          debugPrint(
+              'Camera: ${size.width}x${size.height}  ratio: ${size.width / size.height}');
         }
       }
 
@@ -264,13 +266,10 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
     }
   }
 
-
   Future<void> _safeSetExposureLocked(CameraController controller) async {
     try {
-    
       await controller.setExposureMode(ExposureMode.auto);
 
-    
       await Future.delayed(const Duration(seconds: 1));
 
       final maxExposure = await controller.getMaxExposureOffset();
@@ -284,12 +283,10 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
       await Future.delayed(const Duration(milliseconds: 500));
 
       await controller.setExposureMode(ExposureMode.locked);
-
     } catch (e, st) {
       debugPrint('[Camera] setExposureMode failed: $e\n$st');
     }
   }
-
 
   Future<void> _safeSetMinZoom(CameraController controller) async {
     try {
@@ -343,7 +340,6 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
         _handleFaces(faces, image.width.toDouble(), image.height.toDouble());
         
         */
-
       } catch (e, st) {
         debugPrint('[FaceDetect] $e\n$st');
       } finally {
@@ -352,72 +348,56 @@ class _LookAtCameraScreenState extends State<LookAtCameraScreen>
     });
   }
 
-
-
-
-
-
-
   // Add this method after _startFaceTracking()
-Future<void> _autoStartRecording() async {
-  // Wait a moment for camera to stabilize
-  await Future.delayed(const Duration(milliseconds: 1500));
+  Future<void> _autoStartRecording() async {
+    // Wait a moment for camera to stabilize
+    await Future.delayed(const Duration(milliseconds: 1500));
 
-  if (!mounted || _isBusy || _isUploading || _didTriggerCapture) return;
+    if (!mounted || _isBusy || _isUploading || _didTriggerCapture) return;
 
-  final username = widget.draft.username;
-  final isLogin = widget.draft.isLogin;
-  setState(() {
-    _status = isLogin
-        ? 'Checking username…'
-        : 'Checking username availability…';
-  });
+    final username = widget.draft.username;
+    final isLogin = widget.draft.isLogin;
+    setState(() {
+      _status =
+          isLogin ? 'Checking username…' : 'Checking username availability…';
+    });
 
-  try {
-    if (isLogin) {
-      final exists = await _api.checkUsernameExists(username);
-      if (!exists) {
-        if (mounted) {
-          setState(() {
-            _status =
-                'The username "$username" was not found. Please sign up first.';
-            _uploadErrorDetail =
-                'Username "$username" does not exist in the backend.';
-          });
+    try {
+      if (isLogin) {
+        final exists = await _api.checkUsernameExists(username);
+        if (!exists) {
+          if (mounted) {
+            setState(() {
+              _status =
+                  'The username "$username" was not found. Please sign up first.';
+              _uploadErrorDetail =
+                  'Username "$username" does not exist in the backend.';
+            });
+          }
+          return;
         }
-        return;
-      }
-    } else {
-      final isAvailable = await _api.checkUsernameAvailable(username);
-      if (!isAvailable) {
-        if (mounted) {
-          setState(() {
-            _status =
-                'The username "$username" is already taken. Please go back and choose a different one.';
-            _uploadErrorDetail =
-                'Username "$username" is already registered in the system.';
-          });
+      } else {
+        final isAvailable = await _api.checkUsernameAvailable(username);
+        if (!isAvailable) {
+          if (mounted) {
+            setState(() {
+              _status =
+                  'The username "$username" is already taken. Please go back and choose a different one.';
+              _uploadErrorDetail =
+                  'Username "$username" is already registered in the system.';
+            });
+          }
+          return;
         }
-        return;
       }
+    } catch (e) {
+      debugPrint('[UsernameCheck] Failed: $e — proceeding anyway');
     }
-  } catch (e) {
-    debugPrint('[UsernameCheck] Failed: $e — proceeding anyway');
+
+    debugPrint('[Auto] Starting recording sequence');
+    _didTriggerCapture = true;
+    await _startVideoRecordingSequence();
   }
-
-  debugPrint('[Auto] Starting recording sequence');
-  _didTriggerCapture = true;
-  await _startVideoRecordingSequence();
-}
-
-
-
-
-
-
-
-
-
 
   /*
 
@@ -597,9 +577,9 @@ Future<void> _autoStartRecording() async {
   }
 
   double get _ringActiveFraction {
-  if (_isUploading) return 1.0;
-  if (_isRecording) return _recordingRingProgress;
-  return _uploadProgress;   // stays at 1.0 after recording since you set it to 1.0
+    if (_isUploading) return 1.0;
+    if (_isRecording) return _recordingRingProgress;
+    return _uploadProgress; // stays at 1.0 after recording since you set it to 1.0
   }
 
   void _startRecordingRingProgress() {
@@ -630,7 +610,8 @@ Future<void> _autoStartRecording() async {
   // ─── Video recording sequence (3s invisible countdown + 1s record with green ring) ───
 
   Future<void> _startVideoRecordingSequence() async {
-    debugPrint('[Sequence] Entered. isBusy=$_isBusy isUploading=$_isUploading');  // ADD
+    debugPrint(
+        '[Sequence] Entered. isBusy=$_isBusy isUploading=$_isUploading'); // ADD
     final controller = _controller;
     if (controller == null || _isBusy || _isUploading) return;
     if (mounted) setState(() => _uploadErrorDetail = null);
@@ -639,25 +620,25 @@ Future<void> _autoStartRecording() async {
       // Stop the image stream before recording
       if (controller.value.isStreamingImages) {
         await controller.stopImageStream();
-        debugPrint('[Sequence] Image stream stopped');  // ADD
+        debugPrint('[Sequence] Image stream stopped'); // ADD
       }
       _isStreaming = false;
       _isBusy = true;
-      debugPrint('[Sequence] Countdown starting...');  // ADD
-      
+      debugPrint('[Sequence] Countdown starting...'); // ADD
+
       // Reset countdown (invisible to user)
       _countdownValue = _countdownSeconds;
-      
+
       // Start invisible countdown
       _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        debugPrint('[Sequence] Countdown tick: $_countdownValue');  // ADD
+        debugPrint('[Sequence] Countdown tick: $_countdownValue'); // ADD
         if (!mounted) {
           timer.cancel();
           return;
         }
-        
+
         _countdownValue--;
-        
+
         if (_countdownValue == 0) {
           timer.cancel();
           _startVideoRecording();
@@ -671,98 +652,95 @@ Future<void> _autoStartRecording() async {
     }
   }
 
- Future<void> _startVideoRecording() async {
-  debugPrint('[Record] Attempting to start recording...');
-  final controller = _controller;
-  if (controller == null) {
-    debugPrint('[Record] Controller is null, aborting');
-    _didTriggerCapture = false;
-    _isBusy = false;
-    return;
-  }
+  Future<void> _startVideoRecording() async {
+    debugPrint('[Record] Attempting to start recording...');
+    final controller = _controller;
+    if (controller == null) {
+      debugPrint('[Record] Controller is null, aborting');
+      _didTriggerCapture = false;
+      _isBusy = false;
+      return;
+    }
 
-  await controller.lockCaptureOrientation(DeviceOrientation.portraitUp);
+    await controller.lockCaptureOrientation(DeviceOrientation.portraitUp);
 
-  //Log the actual preview size at the moment recording begins
-  debugPrint(
-      'Recording size: ${controller.value.previewSize}'
-  );
-  
-  await _safeSetExposureLocked(controller);
+    //Log the actual preview size at the moment recording begins
+    debugPrint('Recording size: ${controller.value.previewSize}');
 
+    await _safeSetExposureLocked(controller);
 
-  _setStatus('Recording...');
-  if (mounted) {
-    setState(() {
-      _isRecording = true;
-      _uploadProgress = 0.0;
-      _recordingRingProgress = 0.0;
-    });
-  }
+    _setStatus('Recording...');
+    if (mounted) {
+      setState(() {
+        _isRecording = true;
+        _uploadProgress = 0.0;
+        _recordingRingProgress = 0.0;
+      });
+    }
 
-  try {
-    await controller.startVideoRecording();
-    debugPrint('[Record] Recording started successfully');
-    _startRecordingRingProgress();
+    try {
+      await controller.startVideoRecording();
+      debugPrint('[Record] Recording started successfully');
+      _startRecordingRingProgress();
 
-    _recordTimer = Timer(const Duration(seconds: _recordDurationSeconds), () async {
-      debugPrint('[Record] Timer fired, stopping...');
-      if (!mounted) return;
+      _recordTimer =
+          Timer(const Duration(seconds: _recordDurationSeconds), () async {
+        debugPrint('[Record] Timer fired, stopping...');
+        if (!mounted) return;
 
-      try {
-        final XFile videoFile = await controller.stopVideoRecording();
-        _ringProgressTimer?.cancel();
-        await controller.pausePreview();
+        try {
+          final XFile videoFile = await controller.stopVideoRecording();
+          _ringProgressTimer?.cancel();
+          await controller.pausePreview();
 
+          await Future.delayed(
+            const Duration(milliseconds: 100),
+          );
 
-        await Future.delayed(
-          const Duration(milliseconds: 100),
-        );
+          await controller.resumePreview();
 
-        await controller.resumePreview();
+          final file = File(videoFile.path);
 
-       
-        final file = File(videoFile.path);
+          if (!await file.exists()) {
+            debugPrint("Video file missing");
+            return;
+          }
 
-        if (!await file.exists()) {
-          debugPrint("Video file missing");
-          return;
-        }
+          final size = await file.length();
+          debugPrint("Video size: $size");
 
-        final size = await file.length();
-        debugPrint("Video size: $size");
+          if (size == 0) {
+            debugPrint("Video file is empty");
+            _isBusy = false;
+            _didTriggerCapture = false;
+            _setStatus('Center your face inside the ring.');
+            await _restartTrackingIfNeeded();
+            await _autoStartRecording();
+            return;
+          }
 
-        if (size == 0) {
-          debugPrint("Video file is empty");
-          _isBusy = false;
-          _didTriggerCapture = false;
-          _setStatus('Center your face inside the ring.');
-          await _restartTrackingIfNeeded();
-          await _autoStartRecording();
-          return;
-        }
+          if (mounted) {
+            setState(() {
+              _uploadProgress = 1.0; // ← move this FIRST
+              _isRecording = false;
+              _recordingRingProgress = 1.0;
+            });
+          }
 
-        if (mounted) {
-          setState(() {
-            _uploadProgress = 1.0;        // ← move this FIRST
-            _isRecording = false;
-            _recordingRingProgress = 1.0;
-          });
-        }
-
-
-        // Extract a thumbnail frame and upload to Firebase Storage
-      
+          // TEMP TODAY: skip Firebase Storage because the bucket is unavailable.
+          // The backend upload below still saves the video/frames on your computer.
           String? firebaseFrameUrl;
-            if (_firebase.isReady) {
-              final thumbBytes = await vt.VideoThumbnail.thumbnailData(
-                video: videoFile.path,
-                imageFormat: vt.ImageFormat.JPEG,
-                quality: 85,
-              );
-              
 
-           if (thumbBytes != null) {
+          /*
+        // ORIGINAL FIREBASE STORAGE THUMBNAIL UPLOAD - restore after today.
+        if (_firebase.isReady) {
+          final thumbBytes = await vt.VideoThumbnail.thumbnailData(
+            video: videoFile.path,
+            imageFormat: vt.ImageFormat.JPEG,
+            quality: 85,
+          );
+
+          if (thumbBytes != null) {
             final folder = widget.draft.isLogin ? 'login_frames' : 'signup_frames';
             firebaseFrameUrl = await _firebase.tryUploadFrameImage(
               username: widget.draft.username,
@@ -772,44 +750,48 @@ Future<void> _autoStartRecording() async {
             );
           }
         }
+        */
 
-        await _uploadVideo(videoFile, frameUrl: firebaseFrameUrl);
-      
-      } catch (e) {
-        if (mounted) {
-          _ringProgressTimer?.cancel();
-          setState(() {
-            _isRecording = false;
-            _recordingRingProgress = 0.0;
-          });
-          _setStatus('Recording failed. Try again.');
-          _didTriggerCapture = false;
-          _isBusy = false;
-          await _restartTrackingIfNeeded();
+          await _uploadVideo(videoFile, frameUrl: firebaseFrameUrl);
+        } catch (e) {
+          if (mounted) {
+            _ringProgressTimer?.cancel();
+            setState(() {
+              _isRecording = false;
+              _recordingRingProgress = 0.0;
+            });
+            _setStatus('Recording failed. Try again.');
+            _didTriggerCapture = false;
+            _isBusy = false;
+            await _restartTrackingIfNeeded();
+          }
         }
-      }
-    });
-  } catch (e) {
-    _ringProgressTimer?.cancel();
-    setState(() {
-      _isRecording = false;
-      _recordingRingProgress = 0.0;
-    });
-    _setStatus('Recording failed. Try again.');
-    _didTriggerCapture = false;
-    _isBusy = false;
-    await _restartTrackingIfNeeded();
+      });
+    } catch (e) {
+      _ringProgressTimer?.cancel();
+      setState(() {
+        _isRecording = false;
+        _recordingRingProgress = 0.0;
+      });
+      _setStatus('Recording failed. Try again.');
+      _didTriggerCapture = false;
+      _isBusy = false;
+      await _restartTrackingIfNeeded();
+    }
   }
-}
 
-
-Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
+  Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
     _isUploading = true;
-    _setStatus(widget.draft.isLogin ? 'Verifying login...' : 'Processing video...');
+    _setStatus(
+        widget.draft.isLogin ? 'Verifying login...' : 'Processing video...');
 
     final localVideoFile = File(videoFile.path);
     String? firebaseVideoUrl;
 
+    // TEMP TODAY: skip Firebase Storage because the bucket is unavailable.
+    // The API upload still sends the local video file to your ngrok backend.
+    /*
+    // ORIGINAL FIREBASE STORAGE VIDEO UPLOAD - restore after today.
     if (_firebase.isReady) {
       firebaseVideoUrl = widget.draft.isLogin
           ? await _firebase.tryUploadVideoFile(
@@ -823,6 +805,7 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
               folder: 'enrollment_videos',
             );
     }
+    */
 
     // ── 1. API call in its own try/catch ─────────────────────────────────────
     EnrollmentUploadResult? result;
@@ -883,8 +866,8 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
             frameWidth: _lastFrameW,
             frameHeight: _lastFrameH,
             videoUrl: firebaseVideoUrl,
-            frameUrl: frameUrl,  
-            helperData: extraMeta,        // ← add this
+            frameUrl: frameUrl,
+            helperData: extraMeta, // ← add this
             backendRawBody: result.rawBody,
             backendStatusCode: result.statusCode,
             backendRequestUrl: result.requestUrl,
@@ -899,7 +882,7 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
             frameHeight: _lastFrameH,
             videoUrl: firebaseVideoUrl,
             frameUrl: frameUrl,
-            helperData: extraMeta,        // ← add this
+            helperData: extraMeta, // ← add this
             backendRawBody: result.rawBody,
             backendStatusCode: result.statusCode,
             backendRequestUrl: result.requestUrl,
@@ -1001,7 +984,8 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
   Future<void> _restartTrackingIfNeeded() async {
     if (!mounted) return;
     final controller = _controller;
-    if (controller == null || !controller.value.isInitialized || _isUploading) return;
+    if (controller == null || !controller.value.isInitialized || _isUploading)
+      return;
     if (!_isBusy && !_isStreaming) {
       _consecutiveGoodFrames = 0;
       await _startFaceTracking();
@@ -1016,9 +1000,9 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
 
     final double ringSize = (size.width * 0.75).clamp(240.0, 340.0);
     final double ringCentreFromTop = previewHeight * 0.50;
-    final double ringLeft         = (size.width - ringSize) / 2;
-    final double ringTop          = ringCentreFromTop - ringSize / 2;
-    const double tickRingMargin   = 20;
+    final double ringLeft = (size.width - ringSize) / 2;
+    final double ringTop = ringCentreFromTop - ringSize / 2;
+    const double tickRingMargin = 20;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -1029,7 +1013,6 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
         fit: StackFit.expand,
         children: [
           const SizedBox.expand(),
-
           Positioned(
             left: 0,
             top: 0,
@@ -1043,7 +1026,6 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
               onRetry: _initializeCamera,
             ),
           ),
-
           SafeArea(
             child: Align(
               alignment: Alignment.topLeft,
@@ -1058,31 +1040,30 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
                       color: Colors.black54,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.close, color: Colors.white, size: 20),
+                    child:
+                        const Icon(Icons.close, color: Colors.white, size: 20),
                   ),
                 ),
               ),
             ),
           ),
-
           Positioned(
-            left:   ringLeft - tickRingMargin,
-            top:    ringTop  - tickRingMargin,
-            width:  ringSize + (tickRingMargin * 2),
+            left: ringLeft - tickRingMargin,
+            top: ringTop - tickRingMargin,
+            width: ringSize + (tickRingMargin * 2),
             height: ringSize + (tickRingMargin * 2),
             child: TickRing(
-              size:               ringSize + (tickRingMargin * 2),
-              tickCount:          _tickRingCount,
-              tickWidth:          4,
-              tickLength:         14,
-              gap:                0,
-              tickColor:          const Color(0xFFBFC6CF),
-              activeTickColor:    const Color(0xFF00E676),
+              size: ringSize + (tickRingMargin * 2),
+              tickCount: _tickRingCount,
+              tickWidth: 4,
+              tickLength: 14,
+              gap: 0,
+              tickColor: const Color(0xFFBFC6CF),
+              activeTickColor: const Color(0xFF00E676),
               activeTickFraction: _ringActiveFraction,
               child: const SizedBox.shrink(),
             ),
           ),
-
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -1112,7 +1093,6 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
                       color: Color(0xFFBFC6CF),
                     ),
                   ),
-
                   if (_uploadErrorDetail != null && !_isUploading) ...[
                     const SizedBox(height: 10),
                     Flexible(
@@ -1137,11 +1117,10 @@ Future<void> _uploadVideo(XFile videoFile, {String? frameUrl}) async {
                       ),
                     ),
                   ],
-
                   const SizedBox(height: 20),
-
                   PrimaryButton(
-                    label: _isBusy || _isUploading ? 'Please wait…' : 'Start over',
+                    label:
+                        _isBusy || _isUploading ? 'Please wait…' : 'Start over',
                     backgroundColor: (!_isBusy && !_isUploading)
                         ? AppTheme.accent
                         : const Color(0xFF2A313C),
@@ -1172,10 +1151,10 @@ class _FullScreenCamera extends StatelessWidget {
   });
 
   final CameraController? controller;
-  final Future<void>?     initializeFuture;
-  final String?           error;
-  final bool              isRecording;
-  final VoidCallback      onRetry;
+  final Future<void>? initializeFuture;
+  final String? error;
+  final bool isRecording;
+  final VoidCallback onRetry;
 
   static const double _targetPreviewAspect = 3.0 / 4.0;
 
@@ -1218,7 +1197,7 @@ class _FullScreenCamera extends StatelessWidget {
       );
     }
 
-    final c    = controller;
+    final c = controller;
     final init = initializeFuture;
     if (c == null || init == null) {
       return const SizedBox.expand();
